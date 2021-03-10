@@ -98,9 +98,99 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="[SC2] Camp Crawler" startnode="16" creator="Twine" creator-version="2.3.13" ifid="55ECA00A-D763-4FE0-90B6-7C021EC804D9" zoom="1" format="SugarCube" format-version="2.34.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*img[align="center"], img[align="middle"]{	
-display: block;
-margin: 0 auto !important;}*/
+	<tw-storydata name="[SC2] Camp Crawler" startnode="16" creator="Twine" creator-version="2.3.13" ifid="55ECA00A-D763-4FE0-90B6-7C021EC804D9" zoom="1" format="SugarCube" format-version="2.34.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*-------------------------------------------------------------------*/
+/* Styling MINIMAP at the Right UI Bar. */
+#map {
+    border: 4px double white;
+    display: block;
+    height: 256px;
+    left: 84.5%;
+    position: fixed;
+    top: 73.5%;
+    width: 256px;
+}
+#map img {
+	position: absolute;
+	z-index: 10;
+}
+#map .map {
+	z-index: 10;
+}
+/*-------------------------------------------------------------------*/
+/* Styling and Colours of the Right UI Bar. */
+#map-ui-bar {
+    height: 30%;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    transition: right 0.2s ease-in 0s;
+    width: 100%;
+    z-index: 99900;
+  	background-color: transparent;
+	text-align: center;
+    -webkit-transition: right .2s ease-in;
+    -o-transition: right .2s ease-in;
+}
+#map-ui-bar-tray {
+    position: sticky;
+    border: none;
+    width: 100%;
+    height: 10%;
+}
+#map-ui-bar-toggle {
+    display: block;
+    position: absolute;
+    left: 83%;
+    border: medium none;
+    padding: .3em .45em .25em;
+    -webkit-user-select: none;
+  	background-color: rgb(68 68 68 / 50%);
+    color: black;
+  	font-size: 1.2em;
+}
+#map-ui-bar-toggle:before {
+  	content: "";
+  	font-family: tme-fa-icons;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	speak: none;
+}
+#map-ui-bar-body {
+    padding: 0 1.5em;
+    line-height: 0;
+    position: sticky;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+}
+
+/* Stowing of the Right UI Bar. */
+#map-ui-bar.stowed {
+    bottom: -18em;
+    left: 16em;
+   	top: 97%
+}
+
+#map-ui-bar.stowed #map-ui-bar-toggle:before {
+  	content: "";
+}
+#map-ui-bar.stowed #map-ui-bar-body {
+	visibility: hidden;
+	-webkit-transition: visibility .2s step-end;
+	-o-transition: visibility .2s step-end;
+	transition: visibility .2s step-end;
+}
+
+/*-------------------------------------------------------------------*/
+/*#TAG fo hiding map UI Bar*/
+.hidemap #map-ui-bar {
+	display: none;
+}
+/*-------------------------------------------------------------------*/
 html, body {
 	width: -webkit-calc(100vw - 16px);
 	width: -moz-calc(100vw - 16px);
@@ -108,7 +198,7 @@ html, body {
 	min-height: 100%;
 }
 body.tent {
-	background: url("https://cdna.artstation.com/p/assets/images/images/014/075/060/large/vincent-lau-20181012-nomx-tent-interior-color-edit-v2.jpg?1542341957") center center / cover no-repeat;
+  	background: url("https://cdna.artstation.com/p/assets/images/images/014/075/060/large/vincent-lau-20181012-nomx-tent-interior-color-edit-v2.jpg?1542341957") center center / cover no-repeat;
 }
 body.forest {
 	background: url("https://alifeinfantasyroleplaying.files.wordpress.com/2018/01/cropped-the-kings-forest-forgotten-realms.jpg") center center / cover no-repeat;
@@ -117,7 +207,8 @@ body.camp {
 	background: url("https://i.pinimg.com/originals/f5/ae/63/f5ae633c07065996338036bc14b87589.jpg") center center / cover no-repeat;
 }
 body.gui.loading-screen {
-	background: url("https://wallpapercave.com/wp/5SYeY9l.jpg") center center / cover no-repeat;
+  	background: url("images/loadingScreen.jpg") center center / cover no-repeat;
+	/*background: url("https://wallpapercave.com/wp/5SYeY9l.jpg") center center / cover no-repeat;*/
 }
 body.menu {
 	background: url("https://i.pinimg.com/originals/d0/67/5e/d0675e75e10ac79ff8af6245eb4d804b.jpg") center center / cover no-repeat;
@@ -322,7 +413,25 @@ background-color: rgb(255 0 0 / 10%);
 #ui-bar .hoverBox {
 	max-width: 230px;
 }
-/* hovertip v2.0 - End */</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* Health Bar code - Start */
+/* hovertip v2.0 - End */</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* Create the Right UI Bar. */
+var $rightUiBar = $('<div id="map-ui-bar" class="stowed"></div>').insertAfter("#ui-bar");
+
+var rightTray = $rightUiBar.append('<div id="map-ui-bar-tray"><button id="map-ui-bar-toggle" tabindex="0" title="Toggle the MiniMap" aria-label="Toggle the MiniMap" type="button"></button></div>');
+
+var rightBody = $rightUiBar.append('<div id="map-ui-bar-body"></div>');
+
+/* Attach the toggle button click. */
+$rightUiBar.find('#map-ui-bar-toggle').ariaClick({label : "Toggle the MiniMap"}, () => $rightUiBar.toggleClass('stowed'));
+
+/* Automatically show the contents of the StoryRightSidebar passage in the map-ui-bar-body element. */
+postrender["Display MiniMap"] = function (content, taskName) {
+	setPageElement('map-ui-bar-body', 'StoryMinimapBar');
+};
+
+// As a boolean; always start stowed
+Config.ui.stowBarInitially = true;
+
+/* Health Bar code - Start */
 window.Health = function (CurHP, MaxHP, BarID, Horizontal, Container) {
 	if (Container == undefined) {
 		Container = document;
@@ -530,7 +639,11 @@ Macro.add("hovertip", {
 		}
 	}
 });
-/* hovertip v2.0 - End */</script><tw-tag name="header" color="blue"></tw-tag>,<tw-tag name="gui" color="red"></tw-tag>,<tw-tag name="loadingScreen" color="gray"></tw-tag>,<tw-tag name="menu" color="yellow"></tw-tag>,<tw-tag name="battleScreen" color="purple"></tw-tag>,<tw-tag name="noGui" color="purple"></tw-tag>,<tw-tag name="camp" color="green"></tw-tag>,<tw-tag name="tent" color="green"></tw-tag><tw-passagedata pid="1" name="Testing" tags="" position="1192,701" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
+/* hovertip v2.0 - End */
+
+// Tweaked version of maphilight (12-06-2016 build) to work with SugarCube 2 and Twine
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],b):b(a.jQuery)}(window,function(a){var b,c,d,e,f,g,h,i,j,k,l;if(c=!!document.createElement("canvas").getContext,b=function(){var a=document.createElement("div");a.innerHTML='<v:shape id="vml_flag1" adj="1" />';var b=a.firstChild;return b.style.behavior="url(#default#VML)",!b||"object"==typeof b.adj}(),!c&&!b)return void(a.fn.maphilight=function(){return this});if(c){i=function(a){return Math.max(0,Math.min(parseInt(a,16),255))},j=function(a,b){return"rgba("+i(a.substr(0,2))+","+i(a.substr(2,2))+","+i(a.substr(4,2))+","+b+")"},d=function(b){var c=a('<canvas style="width:'+a(b).width()+"px;height:"+a(b).height()+'px;"></canvas>').get(0);return c.getContext("2d").clearRect(0,0,a(b).width(),a(b).height()),c};var m=function(a,b,c,d,e){if(d=d||0,e=e||0,a.beginPath(),"rect"==b)a.rect(c[0]+d,c[1]+e,c[2]-c[0],c[3]-c[1]);else if("poly"==b){a.moveTo(c[0]+d,c[1]+e);for(var f=2;f<c.length;f+=2)a.lineTo(c[f]+d,c[f+1]+e)}else"circ"==b&&a.arc(c[0]+d,c[1]+e,c[2],0,2*Math.PI,!1);a.closePath()};e=function(b,c,d,e,f){var h=b.getContext("2d");if(e.shadow){h.save(),"inside"==e.shadowPosition&&(m(h,c,d),h.clip());var i=100*b.width,k=100*b.height;m(h,c,d,i,k),h.shadowOffsetX=e.shadowX-i,h.shadowOffsetY=e.shadowY-k,h.shadowBlur=e.shadowRadius,h.shadowColor=j(e.shadowColor,e.shadowOpacity);var l=e.shadowFrom;l||(l="outside"==e.shadowPosition?"fill":"stroke"),"stroke"==l?(h.strokeStyle="rgba(0,0,0,1)",h.stroke()):"fill"==l&&(h.fillStyle="rgba(0,0,0,1)",h.fill()),h.restore(),"outside"==e.shadowPosition&&(h.save(),m(h,c,d),h.globalCompositeOperation="destination-out",h.fillStyle="rgba(0,0,0,1);",h.fill(),h.restore())}h.save(),m(h,c,d),e.fill&&(h.fillStyle=j(e.fillColor,e.fillOpacity),h.fill()),e.stroke&&(h.strokeStyle=j(e.strokeColor,e.strokeOpacity),h.lineWidth=e.strokeWidth,h.stroke()),h.restore(),e.fade&&a(b).css("opacity",0).animate({opacity:1},100)},f=function(a){a.getContext("2d").clearRect(0,0,a.width,a.height)}}else d=function(b){return a('<var style="zoom:1;overflow:hidden;display:block;width:'+b.width+"px;height:"+b.height+'px;"></var>').get(0)},e=function(b,c,d,e,f){var g,h,i,j;for(var k in d)d[k]=parseInt(d[k],10);g='<v:fill color="#'+e.fillColor+'" opacity="'+(e.fill?e.fillOpacity:0)+'" />',h=e.stroke?'strokeweight="'+e.strokeWidth+'" stroked="t" strokecolor="#'+e.strokeColor+'"':'stroked="f"',i='<v:stroke opacity="'+e.strokeOpacity+'"/>',"rect"==c?j=a('<v:rect name="'+f+'" filled="t" '+h+' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+d[0]+"px;top:"+d[1]+"px;width:"+(d[2]-d[0])+"px;height:"+(d[3]-d[1])+'px;"></v:rect>'):"poly"==c?j=a('<v:shape name="'+f+'" filled="t" '+h+' coordorigin="0,0" coordsize="'+b.width+","+b.height+'" path="m '+d[0]+","+d[1]+" l "+d.join(",")+' x e" style="zoom:1;margin:0;padding:0;display:block;position:absolute;top:0px;left:0px;width:'+b.width+"px;height:"+b.height+'px;"></v:shape>'):"circ"==c&&(j=a('<v:oval name="'+f+'" filled="t" '+h+' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+(d[0]-d[2])+"px;top:"+(d[1]-d[2])+"px;width:"+2*d[2]+"px;height:"+2*d[2]+'px;"></v:oval>')),j.get(0).innerHTML=g+i,a(b).append(j)},f=function(b){var c=a("<div>"+b.innerHTML+"</div>");c.children("[name=highlighted]").remove(),b.innerHTML=c.html()};g=function(a){var b,c=a.getAttribute("coords").split(",");for(b=0;b<c.length;b++)c[b]=parseFloat(c[b]);return[a.getAttribute("shape").toLowerCase().substr(0,4),c]},l=function(b,c){var d=a(b);return a.extend({},c,!!a.metadata&&d.metadata(),d.data("maphilight"))},k=function(a){return!!a.complete&&("undefined"==typeof a.naturalWidth||0!==a.naturalWidth)},h={position:"absolute",left:0,top:0,padding:0,border:0};var n=!1;a.fn.maphilight=function(i){return i=a.extend({},a.fn.maphilight.defaults,i),c||n||(a(window).ready(function(){document.namespaces.add("v","urn:schemas-microsoft-com:vml");var b=document.createStyleSheet(),c=["shape","rect","oval","circ","fill","stroke","imagedata","group","textbox"];a.each(c,function(){b.addRule("v\\:"+this,"behavior: url(#default#VML); antialias:true")})}),n=!0),this.each(function(){var j,m,n,o,p,q,s;if(j=a(this),!k(this))return window.setTimeout(function(){j.maphilight(i)},200);if(n=a.extend({},i,!!a.metadata&&j.metadata(),j.data("maphilight")),s=j.get(0).getAttribute("usemap"),s&&(o=a('map[name="'+s.substr(1)+'"]'),j.is('img,input[type="image"]')&&s&&o.length>0)){if(j.hasClass("maphilighted")){var t=j.parent();j.insertBefore(t),t.remove(),a(o).unbind(".maphilight")}m=a("<div></div>").css({display:"block",backgroundImage:'url("'+this.src+'")',backgroundSize:"contain",position:"relative",padding:0,width:this.width,height:this.height}),n.wrapClass&&(n.wrapClass===!0?m.addClass(a(this).attr("class")):m.addClass(n.wrapClass)),j.before(m).css("opacity",0).css(h).remove(),b&&j.css("filter","Alpha(opacity=0)"),m.append(j),p=d(this),a(p).css(h),p.height=this.height,p.width=this.width,a(o).bind("alwaysOn.maphilight",function(){q&&f(q),c||a(p).empty(),a(o).find("area[coords]").each(function(){var b,f;f=l(this,n),f.alwaysOn&&(!q&&c&&(q=d(j[0]),a(q).css(h),q.width=j[0].width,q.height=j[0].height,j.before(q)),f.fade=f.alwaysOnFade,b=g(this),c?e(q,b[0],b[1],f,""):e(p,b[0],b[1],f,""))})}).trigger("alwaysOn.maphilight").bind("mouseover.maphilight, focus.maphilight",function(b){var d,f,h=b.target;if(f=l(h,n),!f.neverOn&&!f.alwaysOn){if(d=g(h),e(p,d[0],d[1],f,"highlighted"),f.groupBy){var i;i=/^[a-zA-Z][\-a-zA-Z]+$/.test(f.groupBy)?o.find("area["+f.groupBy+'="'+a(h).attr(f.groupBy)+'"]'):o.find(f.groupBy);var j=h;i.each(function(){if(this!=j){var a=l(this,n);if(!a.neverOn&&!a.alwaysOn){var b=g(this);e(p,b[0],b[1],a,"highlighted")}}})}c||a(p).append("<v:rect></v:rect>")}}).bind("mouseout.maphilight, blur.maphilight",function(a){f(p)}),j.before(p),j.addClass("maphilighted")}})},a.fn.maphilight.defaults={fill:!0,fillColor:"000000",fillOpacity:.2,stroke:!0,strokeColor:"ff0000",strokeOpacity:1,strokeWidth:1,fade:!0,alwaysOn:!1,neverOn:!1,groupBy:!1,wrapClass:!0,shadow:!1,shadowX:0,shadowY:0,shadowRadius:6,shadowColor:"000000",shadowOpacity:.8,shadowPosition:"outside",shadowFrom:!1}});
+/*-------------------------------------------------------------------*/</script><tw-tag name="header" color="blue"></tw-tag>,<tw-tag name="gui" color="red"></tw-tag>,<tw-tag name="loadingScreen" color="gray"></tw-tag>,<tw-tag name="menu" color="yellow"></tw-tag>,<tw-tag name="battleScreen" color="purple"></tw-tag>,<tw-tag name="noGui" color="purple"></tw-tag>,<tw-tag name="camp" color="green"></tw-tag>,<tw-tag name="tent" color="green"></tw-tag>,<tw-tag name="hidemap" color="purple"></tw-tag><tw-passagedata pid="1" name="Testing" tags="" position="898,944" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
 &lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
 &lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
 		Вы мертвы! 
@@ -563,31 +676,20 @@ $enemy[$enemyName].name атакует Вас и наносит $EnemyDmg уро
 		[[Удар|Testing]] 
 		[[Сбежать|Testing]]
 &lt;/div&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Camp" tags="camp" position="496,193" size="100,100">&lt;&lt;if $init != true&gt;&gt;
-Вы просыпаетесь в лагере, ваша голова болит, а воспоминания смутные...
-Что будете делать?
-[[Поискать с кем бы поговорить|CampChef][$ChefTalks to 0]]
-&lt;&lt;if previous() is &quot;CampChef&quot;&gt;&gt;
-[[Вернуться в палатку|Rest][$fullrest to true, $init to true, $training to false]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;else&gt;&gt;
-Что будете делать?
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Camp" tags="camp" position="496,193" size="100,100">Что будете делать?
 [[Поговорить|CampChef]]
 [[Тренировочное поле|TrainingFields][$TrainerTalks to 0]]
 [[Палатка|Tent]]
 [[Отправиться в приключение!|CampGates]]
-&lt;&lt;if $debug is true&gt;&gt;&lt;&lt;link &quot;Testing&quot; &quot;Testing&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="inventory" tags="gui menu" position="1104,226" size="100,100">
+&lt;&lt;if $debug is true&gt;&gt;&lt;&lt;link &quot;Testing&quot; &quot;Testing&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="inventory" tags="gui menu" position="1104,226" size="100,100">
 ----
 /* Show the inventory. */
 
 
 ----
-</tw-passagedata><tw-passagedata pid="4" name="StoryMenu" tags="gui" position="1295,2" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
-&lt;&lt;link &quot;НАЧАЛО&quot; Camp&gt;&gt;&lt;&lt;/link&gt;&gt;
+</tw-passagedata><tw-passagedata pid="4" name="StoryMenu" tags="gui" position="1306,110" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
+&lt;&lt;link &quot;НАЧАЛО&quot; BeginStory&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if tags().includes(&quot;noGui&quot;)&gt;&gt;
-	&lt;&lt;else&gt;&gt;
 		  &lt;!--Статистика--&gt;
 		  &lt;&lt;link &quot;Статистика&quot;&gt;&gt;&lt;&lt;goto [[HUD_Stats]] &gt;&gt;&lt;&lt;/link&gt;&gt;
 		  &lt;!--&lt;!--Инвентарь--&gt;
@@ -600,14 +702,13 @@ $enemy[$enemyName].name атакует Вас и наносит $EnemyDmg уро
 		  &lt;&lt;if $debug is true&gt;&gt;
 			  &lt;&lt;link &quot;Дебаг&quot;&gt;&gt;&lt;&lt;goto [[debug]] &gt;&gt;&lt;&lt;/link&gt;&gt;
 		  &lt;&lt;/if&gt;&gt;
-	  &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;gui&quot;)&gt;&gt;
 
 &lt;&lt;/if&gt;&gt;
 
 
-</tw-passagedata><tw-passagedata pid="5" name="PassageFooter" tags="gui" position="79,135" size="100,100">&lt;&lt;if tags().includes(&quot;gui&quot;)&gt;&gt;
+</tw-passagedata><tw-passagedata pid="5" name="PassageFooter" tags="gui" position="72,108" size="100,100">&lt;&lt;if tags().includes(&quot;gui&quot;)&gt;&gt;
 	&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
 	&lt;&lt;else&gt;&gt;
 		&lt;&lt;link &quot;Назад&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -633,7 +734,7 @@ EXPCur - &lt;&lt;=$player.stats.exp.curent.toFixed(0)&gt;&gt; ||EXPMax - &lt;&lt
 &lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 &lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="8" name="StoryInit" tags="" position="75,370" size="100,100">&lt;&lt;set $player = {}&gt;&gt;
+</tw-passagedata><tw-passagedata pid="8" name="StoryInit" tags="" position="1304,0" size="100,100">&lt;&lt;set $player = {}&gt;&gt;
 &lt;&lt;set $player.stats = 
 {
   level: 1, 
@@ -696,7 +797,7 @@ EXPMax - $player.stats.exp.max
 &lt;&lt;/nobr&gt;&gt;
 
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="CampChef" tags="camp" position="595,34" size="100,100">&lt;&lt;switch $ChefTalks&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="CampChef" tags="camp hidemap" position="503,79" size="100,100">&lt;&lt;switch $ChefTalks&gt;&gt;
 &lt;&lt;case 0&gt;&gt;
 Возле большого костра Вы видите &lt;&lt;=$chefname&gt;&gt;а, явно уже повидавшего многое в своей жизни.
 &lt;&lt;if $init != true&gt;&gt;
@@ -741,12 +842,12 @@ EXPMax - $player.stats.exp.max
 &lt;&lt;if $init != true&gt;&gt;
 - &quot;Ну, раз вопросов нет, то тогда советую вернуться в палатку и как следует выспаться. А когда полегчает, можешь и за ворота выйти.&quot;
 Отойдя от Вас, &lt;&lt;=$chefname&gt;&gt; обошел костер по кругу, и присел неподалеку.
-[[Вернуться в лагерь|Camp][$ChefTalks to 0]]
+&lt;&lt;link &quot;Вернуться в лагерь&quot; BeginStory&gt;&gt;&lt;&lt;set $ChefTalks to 0, $init to true&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;else&gt;&gt;
 - &quot;Ну, раз вопросов нет, то не задерживай ни меня, ни себя. Ступай с миром.&quot;
 [[Вернуться в лагерь|Camp][$ChefTalks to 0]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Tent" tags="tent" position="291,106" size="100,100">&lt;&lt;if $death is true&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Tent" tags="tent hidemap" position="350,237" size="100,100">&lt;&lt;if $death is true&gt;&gt;
 	Упав без сознания вы перестали представлять для монстра интерес и он ушел.
 Вас же нашли местные охотники и отнесли в лагерь.
 	Тут Вы провалялись без сознания $dDays дней. За это время ваши раны успели затянуться, а вы снова готовы к бою.
@@ -762,13 +863,13 @@ EXPMax - $player.stats.exp.max
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 	
-	[[В лагерь|Camp]]</tw-passagedata><tw-passagedata pid="14" name="Outside" tags="main noGui" position="625,365" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
+	[[В лагерь|Camp]]</tw-passagedata><tw-passagedata pid="14" name="Outside" tags="hidemap" position="772,400" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
 &#39;&#39;Идя по тропинке, вы замечаете, как впереди кто-то бродит.
 Присмотревшись, вы поняли, что это -- $enemy[$enemyName].name!!!&#39;&#39;\
 
 [[Бой!|BattleStart]] 
 [[Сбежать|Camp]]
-[[Продолжить путь|Outside]]</tw-passagedata><tw-passagedata pid="15" name="TrainingFields" tags="" position="799,97" size="100,100">&lt;&lt;switch $TrainerTalks&gt;&gt;
+[[Продолжить путь|Outside]]</tw-passagedata><tw-passagedata pid="15" name="TrainingFields" tags="hidemap" position="685,129" size="100,100">&lt;&lt;switch $TrainerTalks&gt;&gt;
 &lt;&lt;case 0&gt;&gt;
 &lt;&lt;if $training != true&gt;&gt;
 Войдя на тренировочное поле, вы увидели как &lt;&lt;=$trainername&gt;&gt; в потрепаных доспехах из кожи, отрабатывает с мечом приемы на манекенах.
@@ -824,7 +925,7 @@ EXPMax - $player.stats.exp.max
 &lt;&lt;=$trainername&gt;&gt; снова взялся за свой меч и начал оттачивать свои приемы.
 [[Вернуться в лагерь|Camp][$TrainerTalks to 0]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="loading-screen" tags="gui loading-screen" position="71,1" size="100,100"></tw-passagedata><tw-passagedata pid="17" name="Rest" tags="tent" position="396,2" size="100,100">&lt;&lt;if $fullrest is true&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="loading-screen" tags="gui loading-screen hidemap" position="71,1" size="100,100"></tw-passagedata><tw-passagedata pid="17" name="Rest" tags="tent hidemap" position="353,130" size="100,100">&lt;&lt;if $fullrest is true&gt;&gt;
 	&lt;&lt;set $reDays = (($player.stats.hp.max-$player.stats.hp.curent)-(($player.stats.hp.max-$player.stats.hp.curent)*($player.skills.healRate.toFixed(0))))&gt;&gt;
 	Проведя в палатке $reDays &lt;&lt;set $days += $reDays&gt;&gt; дней вы восстановили &lt;&lt;set $reHp to $player.stats.hp.max-$player.stats.hp.curent&gt;&gt; $reHp здоровья &lt;&lt;set  $player.stats.hp.curent += $reHp&gt;&gt; &lt;&lt;set $fullhp to false&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -833,7 +934,7 @@ EXPMax - $player.stats.exp.max
 	&lt;&lt;set $reDays to (1-($player.skills.healRate.toFixed(0)))&gt;&gt;
 	&lt;&lt;set $days += $reDays&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-[[Назад|Camp]]</tw-passagedata><tw-passagedata pid="18" name="PassageHeader" tags="" position="75,261" size="100,100">&lt;&lt;silently&gt;&gt;	
+[[Назад|Camp]]</tw-passagedata><tw-passagedata pid="18" name="PassageHeader" tags="" position="69,214" size="100,100">&lt;&lt;silently&gt;&gt;	
 	/*Damage update start*/
 	  &lt;&lt;set $player.stats.damage.max to $player.stats.dmg+0*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)*2&gt;&gt;
 	  &lt;&lt;set $player.stats.damage.min to $player.stats.dmg+0*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)/2 &gt;&gt;
@@ -961,7 +1062,7 @@ EXPMax - $player.stats.exp.max
 	dmgMin: 3,
 	dmgMax: 18,
 	dmgMod: 0
-}&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="EnemySpawner" tags="" position="1234,324" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;include &quot;EnemysInit&quot;&gt;&gt;&lt;&lt;set _WWName = {
+}&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="EnemySpawner" tags="" position="1250,351" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;include &quot;EnemysInit&quot;&gt;&gt;&lt;&lt;set _WWName = {
 	almiraj:     	80,
 	raven:       	70,
 	rat:			50,
@@ -998,7 +1099,7 @@ EXPMax - $player.stats.exp.max
 		&lt;&lt;/if&gt;&gt;
 &lt;/span&gt;&lt;&lt;/nobr&gt;&gt;\
 &lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="21" name="EnemysInit" tags="" position="1237,213" size="100,100">&lt;&lt;set $enemy = {}&gt;&gt;
+</tw-passagedata><tw-passagedata pid="21" name="EnemysInit" tags="" position="1253,240" size="100,100">&lt;&lt;set $enemy = {}&gt;&gt;
 
 &lt;&lt;set $enemy.almiraj = 
 {
@@ -1158,10 +1259,10 @@ EXPMax - $player.stats.exp.max
 {
 	max: 10+($enemy.awakened_shrub.level-1)*4+$enemy.awakened_shrub.end*(10+$enemy.awakened_shrub.str),
 	curent: 1
-}&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="EnemyDamageCalculation" tags="" position="1350,319" size="100,100">&lt;&lt;set _dmgMin to $enemy[$enemyName].damage.dmgMin&gt;&gt;
+}&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="EnemyDamageCalculation" tags="" position="1366,346" size="100,100">&lt;&lt;set _dmgMin to $enemy[$enemyName].damage.dmgMin&gt;&gt;
 &lt;&lt;set _dmgMax to $enemy[$enemyName].damage.dmgMax&gt;&gt;
 &lt;&lt;set $EnemyDmg to random(_dmgMin,_dmgMax)+$enemy[$enemyName].dmgMod&gt;&gt; 
-</tw-passagedata><tw-passagedata pid="23" name="Battle" tags="noGui" position="509,490" size="100,100">&lt;&lt;print $BattleDescription&gt;&gt;
+</tw-passagedata><tw-passagedata pid="23" name="Battle" tags="hidemap" position="500,493" size="100,100">&lt;&lt;print $BattleDescription&gt;&gt;
 
 &lt;&lt;if $player.stats.hp.curent &gt; 0 &amp;&amp; $enemy[$enemyName].health.curent &gt; 0&gt;&gt;
 &lt;div class=&quot;heroside&quot;&gt;
@@ -1185,7 +1286,7 @@ $enemy[$enemyName].name
 &lt;&lt;goto &quot;BattleReward&quot;&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="24" name="BattleReward" tags="" position="368,606" size="100,100">&lt;&lt;set $coinDrop to 5&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="24" name="BattleReward" tags="" position="372,601" size="100,100">&lt;&lt;set $coinDrop to 5&gt;&gt;
 &lt;&lt;set $expDrop to 5&gt;&gt;
 &lt;&lt;set $player.stats.gold += $coinDrop&gt;&gt;
 &lt;&lt;set $player.stats.exp.curent += $expDrop&gt;&gt;
@@ -1195,12 +1296,12 @@ $enemy[$enemyName].name
   &lt;&lt;set $player.stats.cupp++&gt;&gt;
   &lt;&lt;set $player.stats.hp.curent to $player.stats.hp.max&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;goto &quot;BattleWin&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="HeroDamageCalculation" tags="" position="1348,215" size="100,100">&lt;&lt;silently&gt;&gt;
+&lt;&lt;goto &quot;BattleWin&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="HeroDamageCalculation" tags="" position="1364,242" size="100,100">&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _HdmgMin to $player.stats.damage.min&gt;&gt;
 &lt;&lt;set _HdmgMax to $player.stats.damage.max&gt;&gt;
 &lt;&lt;set $HeroDmg to random(_HdmgMin,_HdmgMax)&gt;&gt; 
 &lt;&lt;/silently&gt;&gt;
-</tw-passagedata><tw-passagedata pid="26" name="BattleWin" tags="" position="366,493" size="100,100">						Вы победили $enemy[$enemyName].name!
+</tw-passagedata><tw-passagedata pid="26" name="BattleWin" tags="" position="371,494" size="100,100">						Вы победили $enemy[$enemyName].name!
 
     Внаграду вы получили $coinDrop монет и $expDrop опыта с монстра! 
 
@@ -1287,12 +1388,12 @@ $enemy[$enemyName].name
 			&lt;&lt;include &quot;StatsUp&quot;&gt;&gt;
 		&lt;&lt;/replace&gt;&gt;
 	&lt;&lt;/button&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="BattleRound" tags="" position="508,602" size="100,100">&lt;&lt;include &quot;PlayerInitiative&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="BattleRound" tags="" position="500,600" size="100,100">&lt;&lt;include &quot;PlayerInitiative&quot;&gt;&gt;
 &lt;&lt;include &quot;EnemyInitiative&quot;&gt;&gt;
 &lt;&lt;set $BattleDescription to &quot;&lt;&lt;print $PlayerBattleDescription&gt;&gt;&lt;br&gt;&lt;&lt;print $EnemyBattleDescription&gt;&gt;&quot;&gt;&gt;
 &lt;&lt;goto &quot;Battle&quot;&gt;&gt;
 
-</tw-passagedata><tw-passagedata pid="29" name="BattleStart" tags="" position="626,494" size="100,100">&lt;&lt;set $battle_initiative to random(1,10)&gt;&gt;
+</tw-passagedata><tw-passagedata pid="29" name="BattleStart" tags="" position="771,516" size="100,100">&lt;&lt;set $battle_initiative to random(1,10)&gt;&gt;
 &lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
 &lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
 &lt;&lt;switch $battle_initiative&gt;&gt;
@@ -1355,7 +1456,7 @@ $enemy[$enemyName].name
 &lt;&lt;set $EnemyBattleDescription to &quot;Резким рывком $enemy[$enemyName].name атакует в полную силу и наносит $EnemyDmg урона!&quot;&gt;&gt;
 &lt;&lt;/switch&gt;&gt;
 &lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt; 
-</tw-passagedata><tw-passagedata pid="32" name="CampGates" tags="guard" position="650,204" size="100,100">Возле выхода из лагеря Вас встречает стражник.
+</tw-passagedata><tw-passagedata pid="32" name="CampGates" tags="guard hidemap" position="772,274" size="100,100">Возле выхода из лагеря Вас встречает стражник.
 &lt;&lt;if $player.stats.hp.curent &lt;= 10&gt;&gt;
 - &quot;И куда это ты собрался? Да ты же на ногах еле стоишь! Не выпущу! Иди отдохни и подлечись!&quot;
 [[Вернуться в лагерь|Camp]]
@@ -1367,9 +1468,9 @@ $enemy[$enemyName].name
 [[Вернуться в лагерь|Camp]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="33" name="Training" tags="noGui" position="821,404" size="100,100">- &quot;Ну, что же. Приступим! Покажи ка мне, на что ты способен!&quot;
+</tw-passagedata><tw-passagedata pid="33" name="Training" tags="hidemap" position="795,21" size="100,100">- &quot;Ну, что же. Приступим! Покажи ка мне, на что ты способен!&quot;
 
-&lt;div id=&quot;event&quot;&gt;&lt;&lt;include &quot;TrainUp&quot;&gt;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="TrainUp" tags="" position="941,404" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
+&lt;div id=&quot;event&quot;&gt;&lt;&lt;include &quot;TrainUp&quot;&gt;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="TrainUp" tags="" position="799,128" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
 У вас есть &#39;_cupp&#39; очков персонажа для распределения
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;
 ----
@@ -1444,6 +1545,53 @@ $enemy[$enemyName].name
 
 &lt;&lt;if $cupp &gt; 0 &amp;&amp; _cupp is 0&gt;&gt;
 [[Закончить тренировку|TrainingFields][$player.stats.cupp to _cupp, $cupp to $player.stats.cupp, $TrainerTalks to 1, $training to true]]
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="PassageDone" tags="" position="71,584" size="100,100">&lt;&lt;script&gt;&gt;
+
+// Apply maphilight to all images that have a usemap attribute, e.g.
+// all the maps that are in this twine. This sets the default styling
+// for all the maps. These are all the possible styling options.
+// Note: for picking colors, check out http://hslpicker.com/. You can
+// copy the HEX value as long as you leave off the &quot;#&quot;.
+$(&quot;img[usemap]&quot;).maphilight({
+  fill: true,             	// Fill the area?
+  fillColor: &#39;dd319b&#39;,    	// HEX format without the starting &quot;#&quot;
+  fillOpacity: 0.5,       	// Opacity of the filled area
+  stroke: true,           	// Outline the area?
+  strokeColor: &#39;ef9ace&#39;,
+  strokeOpacity: 1,
+  strokeWidth: 3,			// Outline width
+  fade: true,             	// Animate when hovered with a fade?
+  alwaysOn: false,        	// Always show the areas?
+  neverOn: false,
+  groupBy: false,
+  wrapClass: true,
+  shadow: false,
+  shadowX: 0,
+  shadowY: 0,
+  shadowRadius: 6,
+  shadowColor: &#39;000000&#39;,
+  shadowOpacity: 0.8,
+  shadowPosition: &#39;outside&#39;,
+  shadowFrom: false
+});
+
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="MiniMap" tags="" position="1701,617" size="100,100">&lt;&lt;set _src = &quot;http://www.fallofbabylon.ru/twine/DAP/camp_map_256_.png&quot;&gt;&gt;
+&lt;div id=&quot;map&quot;&gt;
+	&lt;img class=&quot;map&quot; usemap=&quot;#image-map&quot; style=&quot;left: 0px; bottom: 0px;width: 100%; height: 100%;&quot; @src=&quot;_src&quot;&gt;
+&lt;map name=&quot;image-map&quot;&gt;
+    &lt;area alt=&quot;trader&quot; title=&quot;trader&quot; href=&quot;&quot; coords=&quot;102,59,188,100&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;tent&quot; title=&quot;tent&quot; data-passage=&quot;Tent&quot; coords=&quot;58,52,90,89&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;campfire&quot; title=&quot;campfire&quot;  coords=&quot;94,113,118,141&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;train&quot; title=&quot;train&quot; href=&quot;&quot; coords=&quot;199,86,236,173&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;west&quot; title=&quot;west&quot; href=&quot;&quot; coords=&quot;19,89,0,152&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;south&quot; title=&quot;south&quot; href=&quot;&quot; coords=&quot;127,181,184,255&quot; shape=&quot;rect&quot;&gt;
+&lt;/map&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="StoryMinimapBar" tags="" position="1698,509" size="100,100">&lt;&lt;include &quot;MiniMap&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="BeginStory" tags="camp" position="305,7.5" size="100,100">&lt;&lt;if $init != true&gt;&gt;
+Вы просыпаетесь в лагере, ваша голова болит, а воспоминания смутные...
+Что будете делать?
+&lt;&lt;link &quot;Поискать с кем бы поговорить&quot; CampChef&gt;&gt;&lt;&lt;set $ChefTalks to 0&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;link &quot;Вернуться в палатку&quot; Rest&gt;&gt;&lt;&lt;set $fullrest to true, $training to false&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/if&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
