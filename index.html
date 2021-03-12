@@ -412,7 +412,21 @@ background-color: rgb(255 0 0 / 10%);
 #ui-bar .hoverBox {
 	max-width: 230px;
 }
-/* hovertip v2.0 - End */</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* Create the Right UI Bar. */
+/* hovertip v2.0 - End */
+
+/* notify.min.css, by chapel; for use with notify.js; v1.0.0 */
+#notify{position:fixed;display:block;width:16em;right:-20em;top:2em;padding:.5em;background-color:#fff;color:#000;-webkit-transition:right .3s;-moz-transition:right .3s;-o-transition:right .3s;transition:right .3s}#notify.open{right:0}
+/* end notify.min.css */</style><script role="script" id="twine-user-script" type="text/twine-javascript">if (document.location.href.toLowerCase().includes("/temp/") || document.location.href.toLowerCase().includes("/private/") || hasOwnProperty.call(window, "storyFormat")) {
+	// Change this to the path where the HTML file is
+	// located if you want to run this from inside Twine.
+	setup.Path = "https://raw.githubusercontent.com/Okamich/CampCrawler/main/";  // Running inside Twine application
+} else { 
+	setup.Path = "";  // Running in a browser
+}
+
+setup.ImagePath = setup.Path + "images/";
+
+/* Create the Right UI Bar. */
 var $rightUiBar = $('<div id="map-ui-bar" class="stowed"></div>').insertAfter("#ui-bar");
 
 var rightTray = $rightUiBar.append('<div id="map-ui-bar-tray"><button id="map-ui-bar-toggle" tabindex="0" title="Toggle the MiniMap" aria-label="Toggle the MiniMap" type="button"></button></div>');
@@ -462,6 +476,7 @@ window.Experience = function (CurEXP, MaxEXP, BarID, Horizontal, Container) {
 	$(Container).find("#" + BarID + "bkg").attr("title", CurEXP + "/" + MaxEXP + " EXP");
 };
 /* Experience Bar code - End */
+
 
 /*Back function code - Start*/
 $(document).on(':passagestart', function (ev) {
@@ -642,51 +657,61 @@ Macro.add("hovertip", {
 
 // Tweaked version of maphilight (12-06-2016 build) to work with SugarCube 2 and Twine
 !function(a,b){"function"==typeof define&&define.amd?define(["jquery"],b):b(a.jQuery)}(window,function(a){var b,c,d,e,f,g,h,i,j,k,l;if(c=!!document.createElement("canvas").getContext,b=function(){var a=document.createElement("div");a.innerHTML='<v:shape id="vml_flag1" adj="1" />';var b=a.firstChild;return b.style.behavior="url(#default#VML)",!b||"object"==typeof b.adj}(),!c&&!b)return void(a.fn.maphilight=function(){return this});if(c){i=function(a){return Math.max(0,Math.min(parseInt(a,16),255))},j=function(a,b){return"rgba("+i(a.substr(0,2))+","+i(a.substr(2,2))+","+i(a.substr(4,2))+","+b+")"},d=function(b){var c=a('<canvas style="width:'+a(b).width()+"px;height:"+a(b).height()+'px;"></canvas>').get(0);return c.getContext("2d").clearRect(0,0,a(b).width(),a(b).height()),c};var m=function(a,b,c,d,e){if(d=d||0,e=e||0,a.beginPath(),"rect"==b)a.rect(c[0]+d,c[1]+e,c[2]-c[0],c[3]-c[1]);else if("poly"==b){a.moveTo(c[0]+d,c[1]+e);for(var f=2;f<c.length;f+=2)a.lineTo(c[f]+d,c[f+1]+e)}else"circ"==b&&a.arc(c[0]+d,c[1]+e,c[2],0,2*Math.PI,!1);a.closePath()};e=function(b,c,d,e,f){var h=b.getContext("2d");if(e.shadow){h.save(),"inside"==e.shadowPosition&&(m(h,c,d),h.clip());var i=100*b.width,k=100*b.height;m(h,c,d,i,k),h.shadowOffsetX=e.shadowX-i,h.shadowOffsetY=e.shadowY-k,h.shadowBlur=e.shadowRadius,h.shadowColor=j(e.shadowColor,e.shadowOpacity);var l=e.shadowFrom;l||(l="outside"==e.shadowPosition?"fill":"stroke"),"stroke"==l?(h.strokeStyle="rgba(0,0,0,1)",h.stroke()):"fill"==l&&(h.fillStyle="rgba(0,0,0,1)",h.fill()),h.restore(),"outside"==e.shadowPosition&&(h.save(),m(h,c,d),h.globalCompositeOperation="destination-out",h.fillStyle="rgba(0,0,0,1);",h.fill(),h.restore())}h.save(),m(h,c,d),e.fill&&(h.fillStyle=j(e.fillColor,e.fillOpacity),h.fill()),e.stroke&&(h.strokeStyle=j(e.strokeColor,e.strokeOpacity),h.lineWidth=e.strokeWidth,h.stroke()),h.restore(),e.fade&&a(b).css("opacity",0).animate({opacity:1},100)},f=function(a){a.getContext("2d").clearRect(0,0,a.width,a.height)}}else d=function(b){return a('<var style="zoom:1;overflow:hidden;display:block;width:'+b.width+"px;height:"+b.height+'px;"></var>').get(0)},e=function(b,c,d,e,f){var g,h,i,j;for(var k in d)d[k]=parseInt(d[k],10);g='<v:fill color="#'+e.fillColor+'" opacity="'+(e.fill?e.fillOpacity:0)+'" />',h=e.stroke?'strokeweight="'+e.strokeWidth+'" stroked="t" strokecolor="#'+e.strokeColor+'"':'stroked="f"',i='<v:stroke opacity="'+e.strokeOpacity+'"/>',"rect"==c?j=a('<v:rect name="'+f+'" filled="t" '+h+' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+d[0]+"px;top:"+d[1]+"px;width:"+(d[2]-d[0])+"px;height:"+(d[3]-d[1])+'px;"></v:rect>'):"poly"==c?j=a('<v:shape name="'+f+'" filled="t" '+h+' coordorigin="0,0" coordsize="'+b.width+","+b.height+'" path="m '+d[0]+","+d[1]+" l "+d.join(",")+' x e" style="zoom:1;margin:0;padding:0;display:block;position:absolute;top:0px;left:0px;width:'+b.width+"px;height:"+b.height+'px;"></v:shape>'):"circ"==c&&(j=a('<v:oval name="'+f+'" filled="t" '+h+' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:'+(d[0]-d[2])+"px;top:"+(d[1]-d[2])+"px;width:"+2*d[2]+"px;height:"+2*d[2]+'px;"></v:oval>')),j.get(0).innerHTML=g+i,a(b).append(j)},f=function(b){var c=a("<div>"+b.innerHTML+"</div>");c.children("[name=highlighted]").remove(),b.innerHTML=c.html()};g=function(a){var b,c=a.getAttribute("coords").split(",");for(b=0;b<c.length;b++)c[b]=parseFloat(c[b]);return[a.getAttribute("shape").toLowerCase().substr(0,4),c]},l=function(b,c){var d=a(b);return a.extend({},c,!!a.metadata&&d.metadata(),d.data("maphilight"))},k=function(a){return!!a.complete&&("undefined"==typeof a.naturalWidth||0!==a.naturalWidth)},h={position:"absolute",left:0,top:0,padding:0,border:0};var n=!1;a.fn.maphilight=function(i){return i=a.extend({},a.fn.maphilight.defaults,i),c||n||(a(window).ready(function(){document.namespaces.add("v","urn:schemas-microsoft-com:vml");var b=document.createStyleSheet(),c=["shape","rect","oval","circ","fill","stroke","imagedata","group","textbox"];a.each(c,function(){b.addRule("v\\:"+this,"behavior: url(#default#VML); antialias:true")})}),n=!0),this.each(function(){var j,m,n,o,p,q,s;if(j=a(this),!k(this))return window.setTimeout(function(){j.maphilight(i)},200);if(n=a.extend({},i,!!a.metadata&&j.metadata(),j.data("maphilight")),s=j.get(0).getAttribute("usemap"),s&&(o=a('map[name="'+s.substr(1)+'"]'),j.is('img,input[type="image"]')&&s&&o.length>0)){if(j.hasClass("maphilighted")){var t=j.parent();j.insertBefore(t),t.remove(),a(o).unbind(".maphilight")}m=a("<div></div>").css({display:"block",backgroundImage:'url("'+this.src+'")',backgroundSize:"contain",position:"relative",padding:0,width:this.width,height:this.height}),n.wrapClass&&(n.wrapClass===!0?m.addClass(a(this).attr("class")):m.addClass(n.wrapClass)),j.before(m).css("opacity",0).css(h).remove(),b&&j.css("filter","Alpha(opacity=0)"),m.append(j),p=d(this),a(p).css(h),p.height=this.height,p.width=this.width,a(o).bind("alwaysOn.maphilight",function(){q&&f(q),c||a(p).empty(),a(o).find("area[coords]").each(function(){var b,f;f=l(this,n),f.alwaysOn&&(!q&&c&&(q=d(j[0]),a(q).css(h),q.width=j[0].width,q.height=j[0].height,j.before(q)),f.fade=f.alwaysOnFade,b=g(this),c?e(q,b[0],b[1],f,""):e(p,b[0],b[1],f,""))})}).trigger("alwaysOn.maphilight").bind("mouseover.maphilight, focus.maphilight",function(b){var d,f,h=b.target;if(f=l(h,n),!f.neverOn&&!f.alwaysOn){if(d=g(h),e(p,d[0],d[1],f,"highlighted"),f.groupBy){var i;i=/^[a-zA-Z][\-a-zA-Z]+$/.test(f.groupBy)?o.find("area["+f.groupBy+'="'+a(h).attr(f.groupBy)+'"]'):o.find(f.groupBy);var j=h;i.each(function(){if(this!=j){var a=l(this,n);if(!a.neverOn&&!a.alwaysOn){var b=g(this);e(p,b[0],b[1],a,"highlighted")}}})}c||a(p).append("<v:rect></v:rect>")}}).bind("mouseout.maphilight, blur.maphilight",function(a){f(p)}),j.before(p),j.addClass("maphilighted")}})},a.fn.maphilight.defaults={fill:!0,fillColor:"000000",fillOpacity:.2,stroke:!0,strokeColor:"ff0000",strokeOpacity:1,strokeWidth:1,fade:!0,alwaysOn:!1,neverOn:!1,groupBy:!1,wrapClass:!0,shadow:!1,shadowX:0,shadowY:0,shadowRadius:6,shadowColor:"000000",shadowOpacity:.8,shadowPosition:"outside",shadowFrom:!1}});
-/*-------------------------------------------------------------------*/</script><tw-tag name="header" color="blue"></tw-tag>,<tw-tag name="gui" color="red"></tw-tag>,<tw-tag name="loadingScreen" color="gray"></tw-tag>,<tw-tag name="menu" color="yellow"></tw-tag>,<tw-tag name="battleScreen" color="purple"></tw-tag>,<tw-tag name="noGui" color="purple"></tw-tag>,<tw-tag name="camp" color="green"></tw-tag>,<tw-tag name="tent" color="green"></tw-tag>,<tw-tag name="hidemap" color="purple"></tw-tag><tw-passagedata pid="1" name="Testing" tags="" position="898,944" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
-&lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
-&lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
-		Вы мертвы! 
-	&lt;&lt;else&gt;&gt;
-		Ваше здоровье $player.stats.hp.curent хп.
-	&lt;&lt;/if&gt;&gt;
-&lt;div id=&quot;passage-battle&quot; class=&quot;enemyside&quot;&gt;
-&lt;&lt;if either(0, 1) is 0&gt;&gt;
-$enemy[$enemyName].name атакует Вас и наносит $EnemyDmg урона!
-&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt; 
-	&lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
-		Вы &lt;&lt;link &quot;мертвы&quot; &quot;Tent&quot;&gt;&gt;&lt;&lt;set $player.stats.hp.curent to 0,$exp to 0,$days += $dDays, $death to true&gt;&gt;&lt;&lt;/link&gt;&gt;! 
-	&lt;&lt;else&gt;&gt;
-		Ваше здоровье $player.stats.hp.curent хп.
-	&lt;&lt;/if&gt;&gt;
-&lt;&lt;else&gt;&gt;
-Вы атакуете $enemy[$enemyName].name и наносите $HeroDmg урона!
-&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
-	&lt;&lt;if $enemy[$enemyName].health.curent &lt;= 0&gt;&gt;
-		$enemy[$enemyName].name &lt;&lt;link &quot;мертв&quot; &quot;BattleReward&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;! 
-	&lt;&lt;else&gt;&gt;
-		Здоровье $monsterName $enemy[$enemyName].health.curent хп.
-	&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;/div&gt;
+/*-------------------------------------------------------------------*/
 
-&lt;&lt;if $player.stats.hp.curent &gt; 0 &amp;&amp; $enemy[$enemyName].health.curent &gt; 0&gt;&gt;
-&lt;div id=&quot;passage-battle&quot; class=&quot;heroside&quot;&gt;
-		----
-		[[Удар|Testing]] 
-		[[Сбежать|Testing]]
-&lt;/div&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Camp" tags="camp" position="496,193" size="100,100">Что будете делать?
+// notify.min.js, for SugarCube 2, by Chapel
+// v1.1.1, 2021-02-25, 2fa0d5a6692222b9a5db3088b4746f12d21cf0b0
+;!function(){var s=/\d+m?s$/;function e(s,e,t){"string"==typeof s&&("number"!=typeof e&&(e=!1),$(document).trigger({type:":notify",message:s,delay:e,class:t||""}))}$(document.body).append("<div id='notify'></div>"),$(document).on(":notify",(function(s){s.message&&"string"==typeof s.message&&(s.message.trim(),s.class?"string"==typeof s.class?s.class="open macro-notify "+s.class:Array.isArray(s.class)?s.class="open macro-notify "+s.class.join(" "):s.class="open macro-notify":s.class="open macro-notify",s.delay?("number"!=typeof s.delay&&(s.delay=Number(s.delay)),Number.isNaN(s.delay)&&(s.delay=2e3)):s.delay=2e3,$("#notify").empty().wiki(s.message).addClass(s.class),setTimeout((function(){$("#notify").removeClass()}),s.delay))})),Macro.add("notify",{tags:null,handler:function(){var t=this.payload[0].contents,a=!1,n=!1;if(this.args.length>0){var i=s.test(this.args[0]);"number"==typeof this.args[0]||i?(a=i?Util.fromCssTime(this.args[0]):this.args[0],n=this.args.length>1&&this.args.slice(1).flatten()):n=this.args.flatten().join(" ")}e(t,a,n)}}),setup.notify=e}();
+// end notify.min.js
+</script><tw-tag name="header" color="blue"></tw-tag>,<tw-tag name="gui" color="red"></tw-tag>,<tw-tag name="loadingScreen" color="gray"></tw-tag>,<tw-tag name="menu" color="yellow"></tw-tag>,<tw-tag name="battleScreen" color="purple"></tw-tag>,<tw-tag name="noGui" color="purple"></tw-tag>,<tw-tag name="camp" color="green"></tw-tag>,<tw-tag name="tent" color="green"></tw-tag>,<tw-tag name="hidemap" color="purple"></tw-tag><tw-passagedata pid="1" name="Testing" tags="" position="2434.666666666667,310" size="100,100">
+[[Тест битвы|BattleTest]] 
+[[Тест битвы|BattleTestForest]] 
+[[Тест битвы|BattleTestMountain]] 
+
+[[Тест инвентаря|InventoryTest][$player.stats.gold to 9999,$TraderWeapons = [{name: &quot;Knife&quot;},{name: &quot;Machete&quot;},{name: &quot;Branch&quot;}]]]
+
+</tw-passagedata><tw-passagedata pid="2" name="Camp" tags="camp" position="395,122" size="100,100">Что будете делать?
 [[Поговорить|CampChef]]
 [[Тренировочное поле|TrainingFields][$TrainerTalks to 0]]
 [[Палатка|Tent]]
-[[Отправиться в приключение!|CampGates]]
-&lt;&lt;if $debug is true&gt;&gt;&lt;&lt;link &quot;Testing&quot; &quot;Testing&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="inventory" tags="gui menu" position="1104,226" size="100,100">
+[[Выйти через Западные ворота|CampGates][$gates to &quot;WestGates&quot;]]
+[[Выйти через Южные ворота|CampGates][$gates to &quot;SouthGates&quot;]]
+&lt;&lt;link &quot;OutsideTesting&quot; &quot;Outside&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="inventory" tags="gui menu" position="1040,231" size="100,100">
 ----
 /* Show the inventory. */
+Weapon:
+-- -- --
+Equiped -- \
+&lt;&lt;capture _i&gt;&gt;&lt;&lt;for _i = 0; _i &lt; $inv.weapons.length; _i++&gt;&gt;\
+&lt;&lt;set _invw = &quot;invw&quot; + (_i + 1)&gt;&gt;\
+&lt;span @id=&quot;_invw&quot; title=&quot;Click to make this the primary weapon&quot;&gt; &lt;&lt;link $inv.weapons[_i].name&gt;&gt;
+	&lt;&lt;set _tempw = $inv.weapons[_i]&gt;&gt;
+	&lt;&lt;set $inv.weapons[_i] = $inv.weapons[0]&gt;&gt;
+	&lt;&lt;set $inv.weapons[0] = _tempw&gt;&gt;
+	&lt;&lt;set _invw = &quot;#invw&quot; + (_i + 1)&gt;&gt;
+	&lt;&lt;run $(&quot;#invw1 a&quot;).empty().wiki(&quot; &quot; + $inv.weapons[0].name)&gt;&gt;
+	&lt;&lt;run $(_invw + &quot; a&quot;).empty().wiki(&quot; &quot; + $inv.weapons[_i].name)&gt;&gt;
+&lt;&lt;/link&gt;&gt;&lt;&lt;if _i == 0&gt;&gt; | &lt;&lt;/if&gt;&gt;&lt;/span&gt;\
+&lt;&lt;if _i &lt; $inv.weapons.length - 1&gt;&gt; | &lt;&lt;/if&gt;&gt;\
+&lt;&lt;/for&gt;&gt;&lt;&lt;/capture&gt;&gt;
 
-
+Armor: 
+-- -- --
+Equiped -- \
+&lt;&lt;capture _a&gt;&gt;&lt;&lt;for _a = 0; _a &lt; $inv.armors.length; _a++&gt;&gt;\
+&lt;&lt;set _inva = &quot;inva&quot; + (_a + 1)&gt;&gt;\
+&lt;span @id=&quot;_inva&quot; title=&quot;Click to make this the curent armor&quot;&gt; &lt;&lt;link $inv.armors[_a].name&gt;&gt;
+	&lt;&lt;set _tempa = $inv.armors[_a]&gt;&gt;
+	&lt;&lt;set $inv.armors[_a] = $inv.armors[0]&gt;&gt;
+	&lt;&lt;set $inv.armors[0] = _tempa&gt;&gt;
+	&lt;&lt;set _inva = &quot;#inva&quot; + (_a + 1)&gt;&gt;
+	&lt;&lt;run $(&quot;#inva1 a&quot;).empty().wiki(&quot; &quot; + $inv.armors[0].name)&gt;&gt;
+	&lt;&lt;run $(_inva + &quot; a&quot;).empty().wiki(&quot; &quot; + $inv.armors[_a].name)&gt;&gt;
+&lt;&lt;/link&gt;&gt;&lt;&lt;if _a == 0&gt;&gt; &lt;&lt;/if&gt;&gt;&lt;/span&gt;\
+&lt;&lt;if _a &lt; $inv.armors.length - 1&gt;&gt; |&lt;&lt;/if&gt;&gt;\
+&lt;&lt;/for&gt;&gt;&lt;&lt;/capture&gt;&gt;
 ----
-</tw-passagedata><tw-passagedata pid="4" name="StoryMenu" tags="gui" position="1306,110" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
+</tw-passagedata><tw-passagedata pid="4" name="StoryMenu" tags="gui" position="1242,115" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
 &lt;&lt;link &quot;НАЧАЛО&quot; BeginStory&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;else&gt;&gt;
 		  &lt;!--Статистика--&gt;
@@ -707,20 +732,26 @@ $enemy[$enemyName].name атакует Вас и наносит $EnemyDmg уро
 &lt;&lt;/if&gt;&gt;
 
 
-</tw-passagedata><tw-passagedata pid="5" name="PassageFooter" tags="gui" position="72,108" size="100,100">&lt;&lt;if tags().includes(&quot;gui&quot;)&gt;&gt;
+</tw-passagedata><tw-passagedata pid="5" name="PassageFooter" tags="gui" position="8,113" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if tags().includes(&quot;gui&quot;)&gt;&gt;
 	&lt;&lt;if tags().includes(&quot;loading-screen&quot;)&gt;&gt;
 	&lt;&lt;else&gt;&gt;
 		&lt;&lt;link &quot;Назад&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="HUD_Stats" tags="gui menu" position="1495,3" size="100,100">Уровень -- $player.stats.level
-------------------------
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="HUD_Stats" tags="gui menu" position="1431,8" size="100,100">Уровень -- $player.stats.level
+----
 &lt;div id=&quot;event&quot;&gt;&lt;&lt;include &quot;StatsUp&quot;&gt;&gt;&lt;/div&gt;
-------------------------
+----
 
-</tw-passagedata><tw-passagedata pid="7" name="StoryCaption" tags="" position="71,475" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;,&quot;battleScreen&quot;)&gt;&gt;
+</tw-passagedata><tw-passagedata pid="7" name="StoryCaption" tags="" position="11,332" size="100,100">&lt;&lt;if tags().includes(&quot;loading-screen&quot;,&quot;battleScreen&quot;)&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;div id=&quot;horizontalhealthbarbkg&quot; class=&quot;hzbarbkg&quot;&gt;&lt;div id=&quot;horizontalhealthbar&quot; class=&quot;hzbar&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;&lt;run Health($player.stats.hp.curent.toFixed(0), $player.stats.hp.max.toFixed(0), &quot;horizontalhealthbar&quot;, true)&gt;&gt;
-&lt;div id=&quot;horizontalexpbarbkg&quot; class=&quot;hzbarbkg&quot;&gt;&lt;div id=&quot;horizontalexpbar&quot; class=&quot;hzbar&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;&lt;run Experience($player.stats.exp.curent.toFixed(0), $player.stats.exp.max.toFixed(0), &quot;horizontalexpbar&quot;, true)&gt;&gt;
+&lt;div id=&quot;horizontalhealthbarbkg&quot; class=&quot;hzbarbkg&quot;&gt;\
+&lt;div id=&quot;horizontalhealthbar&quot; class=&quot;hzbar&quot;&gt;&lt;/div&gt;&lt;/div&gt;\
+&lt;&lt;run Health($player.stats.hp.curent.toFixed(0), $player.stats.hp.max.toFixed(0), &quot;horizontalhealthbar&quot;, true)&gt;&gt;
+&lt;div id=&quot;horizontalexpbarbkg&quot; class=&quot;hzbarbkg&quot;&gt;\
+&lt;div id=&quot;horizontalexpbar&quot; class=&quot;hzbar&quot;&gt;&lt;/div&gt;&lt;/div&gt;\
+&lt;&lt;run Experience($player.stats.exp.curent.toFixed(0), $player.stats.exp.max.toFixed(0), &quot;horizontalexpbar&quot;, true)&gt;&gt;
 ------
 &lt;div id=&quot;mainhud&quot; class=&quot;hud&quot;&gt;
 День: $days || \
@@ -733,43 +764,9 @@ EXPCur - &lt;&lt;=$player.stats.exp.curent.toFixed(0)&gt;&gt; ||EXPMax - &lt;&lt
 &lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 &lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="8" name="StoryInit" tags="" position="1304,0" size="100,100">&lt;&lt;set $player = {}&gt;&gt;
-&lt;&lt;set $player.stats = 
-{
-  level: 1, 
-  str: 1, 
-  perc: 1, 
-  end: 1, 
-  charm: 1, 
-  intel: 1, 
-  agil: 1, 
-  dmg: 1,
-  cupp:0,
-  gold: 0
-}&gt;&gt;
-&lt;&lt;set $player.stats.hp = 
-  {
-	max: 10+($player.stats.level-1)*4+$player.stats.end*(10+$player.stats.str),
-	curent: 1
-  }&gt;&gt;
-&lt;&lt;set $player.stats.exp = 
-  {
-	max: (5*($player.stats.level+1)+10)*(1-$player.stats.intel*(3/100)),
-	curent: 0
-  }&gt;&gt;
-&lt;&lt;set $player.stats.damage = 
-  {
-	max: ($player.stats.dmg+0)*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)*2,
-	min: ($player.stats.dmg+0)*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)/2
-  }&gt;&gt;
-  &lt;&lt;set $player.skills = 
-  {
-	healRate: $player.stats.end/10,
-	goldDropRate: $player.stats.perc/100,
-  }&gt;&gt;
-  	
-
-
+</tw-passagedata><tw-passagedata pid="8" name="StoryInit" tags="" position="1248,8" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;include &quot;HeroInit&quot;&gt;&gt;
+&lt;&lt;include &quot;EnemysInit&quot;&gt;&gt;
 /*------*/
 &lt;&lt;set $init to false&gt;&gt;\
 &lt;&lt;set $days to 1&gt;&gt;\
@@ -777,8 +774,11 @@ EXPCur - &lt;&lt;=$player.stats.exp.curent.toFixed(0)&gt;&gt; ||EXPMax - &lt;&lt
 &lt;&lt;set $chefname to &quot;старик&quot;&gt;&gt;
 &lt;&lt;set $trainername to &quot;мужчина&quot;&gt;&gt;
 /*--------*/
-&lt;&lt;set $debug to false&gt;&gt;
-&lt;&lt;set $death to false&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="jornal" tags="gui menu" position="1098,2" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="10" name="map" tags="gui menu" position="1097,109" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="11" name="debug" tags="" position="1493,223" size="100,100">&lt;&lt;if $debug == true&gt;&gt;
+&lt;&lt;set $debug to true&gt;&gt;
+&lt;&lt;set $death to false&gt;&gt;
+&lt;&lt;set $inv.weapons = [{name: &quot;fist&quot;}]&gt;&gt;
+&lt;&lt;set $inv.armors = [{name: &quot;body&quot;}]&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="jornal" tags="gui menu" position="1034,7" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="10" name="map" tags="gui menu" position="1033,114" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="11" name="debug" tags="" position="1429,228" size="100,100">&lt;&lt;if $debug == true&gt;&gt;
 HPCur - $player.stats.hp.curent | \
 HPMax - $player.stats.hp.max
 EXPCur - $player.stats.exp.curent | \
@@ -796,7 +796,7 @@ EXPMax - $player.stats.exp.max
 &lt;&lt;/nobr&gt;&gt;
 
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="CampChef" tags="camp hidemap" position="503,79" size="100,100">&lt;&lt;switch $ChefTalks&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="CampChef" tags="camp hidemap" position="402,8" size="100,100">&lt;&lt;switch $ChefTalks&gt;&gt;
 &lt;&lt;case 0&gt;&gt;
 Возле большого костра Вы видите &lt;&lt;=$chefname&gt;&gt;а, явно уже повидавшего многое в своей жизни.
 &lt;&lt;if $init != true&gt;&gt;
@@ -846,7 +846,7 @@ EXPMax - $player.stats.exp.max
 - &quot;Ну, раз вопросов нет, то не задерживай ни меня, ни себя. Ступай с миром.&quot;
 [[Вернуться в лагерь|Camp][$ChefTalks to 0]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Tent" tags="tent hidemap" position="350,237" size="100,100">&lt;&lt;if $death is true&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Tent" tags="tent hidemap" position="255,121" size="100,100">&lt;&lt;if $death is true&gt;&gt;
 	Упав без сознания вы перестали представлять для монстра интерес и он ушел.
 Вас же нашли местные охотники и отнесли в лагерь.
 	Тут Вы провалялись без сознания $dDays дней. За это время ваши раны успели затянуться, а вы снова готовы к бою.
@@ -862,13 +862,15 @@ EXPMax - $player.stats.exp.max
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 	
-	[[В лагерь|Camp]]</tw-passagedata><tw-passagedata pid="14" name="Outside" tags="hidemap" position="772,400" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
+	[[В лагерь|Camp]]</tw-passagedata><tw-passagedata pid="14" name="Outside" tags="hidemap" position="1040,606" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;\
 &#39;&#39;Идя по тропинке, вы замечаете, как впереди кто-то бродит.
 Присмотревшись, вы поняли, что это -- $enemy[$enemyName].name!!!&#39;&#39;\
 
-[[Бой!|BattleStart]] 
-[[Сбежать|Camp]]
-[[Продолжить путь|Outside]]</tw-passagedata><tw-passagedata pid="15" name="TrainingFields" tags="hidemap" position="685,129" size="100,100">&lt;&lt;switch $TrainerTalks&gt;&gt;
+[[Бой!|Battle][$BattleState to 0]] 
+
+&lt;button data-passage=&quot;$PrevPassage&quot;&gt;Отступить&lt;/button&gt;
+
+&lt;button data-passage=&quot;$PrevPassage&quot;&gt;Продолжить...&lt;/button&gt;</tw-passagedata><tw-passagedata pid="15" name="TrainingFields" tags="hidemap" position="525,14" size="100,100">&lt;&lt;switch $TrainerTalks&gt;&gt;
 &lt;&lt;case 0&gt;&gt;
 &lt;&lt;if $training != true&gt;&gt;
 Войдя на тренировочное поле, вы увидели как &lt;&lt;=$trainername&gt;&gt; в потрепаных доспехах из кожи, отрабатывает с мечом приемы на манекенах.
@@ -924,7 +926,10 @@ EXPMax - $player.stats.exp.max
 &lt;&lt;=$trainername&gt;&gt; снова взялся за свой меч и начал оттачивать свои приемы.
 [[Вернуться в лагерь|Camp][$TrainerTalks to 0]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="loading-screen" tags="gui loading-screen hidemap" position="71,1" size="100,100"></tw-passagedata><tw-passagedata pid="17" name="Rest" tags="tent hidemap" position="353,130" size="100,100">&lt;&lt;if $fullrest is true&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="loading-screen" tags="gui loading-screen hidemap" position="7,6" size="100,100">&lt;&lt;if $debug is true&gt;&gt;
+	&lt;&lt;link &quot;Testing&quot; &quot;Testing&quot;&gt;&gt;&lt;&lt;set $player.stats.hp.curent to $player.stats.hp.max&gt;&gt;&lt;&lt;/link&gt;&gt;
+	&lt;&lt;link &quot;OutsideTesting&quot; &quot;Outside&quot;&gt;&gt;&lt;&lt;set $player.stats.hp.curent to $player.stats.hp.max&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="Rest" tags="tent hidemap" position="254,11" size="100,100">&lt;&lt;if $fullrest is true&gt;&gt;
 	&lt;&lt;set $reDays = (($player.stats.hp.max-$player.stats.hp.curent)-(($player.stats.hp.max-$player.stats.hp.curent)*($player.skills.healRate.toFixed(0))))&gt;&gt;
 	Проведя в палатке $reDays &lt;&lt;set $days += $reDays&gt;&gt; дней вы восстановили &lt;&lt;set $reHp to $player.stats.hp.max-$player.stats.hp.curent&gt;&gt; $reHp здоровья &lt;&lt;set  $player.stats.hp.curent += $reHp&gt;&gt; &lt;&lt;set $fullhp to false&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -933,33 +938,32 @@ EXPMax - $player.stats.exp.max
 	&lt;&lt;set $reDays to (1-($player.skills.healRate.toFixed(0)))&gt;&gt;
 	&lt;&lt;set $days += $reDays&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-[[Назад|Camp]]</tw-passagedata><tw-passagedata pid="18" name="PassageHeader" tags="" position="69,214" size="100,100">&lt;&lt;silently&gt;&gt;	
-	/*Damage update start*/
-	  &lt;&lt;set $player.stats.damage.max to $player.stats.dmg+0*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)*2&gt;&gt;
-	  &lt;&lt;set $player.stats.damage.min to $player.stats.dmg+0*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)/2 &gt;&gt;
+[[Назад|Camp]]</tw-passagedata><tw-passagedata pid="18" name="PassageHeader" tags="" position="5,219" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;/*Damage update start*/
+&lt;&lt;set $player.stats.damage.max to $player.stats.dmg+$player.stats.wdmg*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)*2&gt;&gt;
+&lt;&lt;set $player.stats.damage.min to $player.stats.dmg+$player.stats.wdmg*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)/2 &gt;&gt;
 	/*Damage update end*/
-	
 	/*Health update start*/
 	  &lt;&lt;set $player.stats.hp.max to 10+($player.stats.level-1)*4+$player.stats.end*(10+$player.stats.str)&gt;&gt;
 	/*Health update end*/
-	
 	/*Experience update start*/
 	  &lt;&lt;set $player.stats.exp.max to (5*($player.stats.level+1)+5*2)*(1-$player.stats.intel*3/100)&gt;&gt;
 	/*Experience update end*/
-	
 	/*Skills update start*/
 		/*Healing Rate*/
 		&lt;&lt;set $player.skills.healRate to $player.stats.end/10&gt;&gt;
 		/*Gold Drop Rate*/
 		&lt;&lt;set $player.skills.goldDropRate to $player.stats.perc/100&gt;&gt;
 	/*Skills update end*/
-	
 	/*Character stat points update start*/
 		&lt;&lt;set $cupp to $player.stats.cupp&gt;&gt;
 		&lt;&lt;set _cupp to $cupp&gt;&gt;
 	/*Character stat points update end*/
-&lt;&lt;/silently&gt;&gt;
-</tw-passagedata><tw-passagedata pid="19" name="EnemysInitOld" tags="" position="1975,444" size="100,100">&lt;&lt;set $enemy = {}&gt;&gt;
+	&lt;&lt;switch $inv.weapons[0].name&gt;&gt;
+	&lt;&lt;case &quot;fist&quot;&gt;&gt;&lt;&lt;set $player.stats.wdmg to 1&gt;&gt;
+	&lt;&lt;case &quot;Sword&quot;&gt;&gt;&lt;&lt;set $player.stats.wdmg to 10&gt;&gt;
+	&lt;&lt;default&gt;&gt;&lt;&lt;set $player.stats.wdmg to 0&gt;&gt;
+	&lt;&lt;/switch&gt;&gt;
+	/*&lt;&lt;include &quot;MapHistory&quot;&gt;&gt;*/&lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="EnemysInitOld" tags="" position="2746.666666666667,654" size="100,100">&lt;&lt;set $enemy = {}&gt;&gt;
 
 &lt;&lt;set $enemy.almiraj = 
 {
@@ -1061,7 +1065,8 @@ EXPMax - $player.stats.exp.max
 	dmgMin: 3,
 	dmgMax: 18,
 	dmgMod: 0
-}&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="EnemySpawner" tags="" position="1250,351" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;include &quot;EnemysInit&quot;&gt;&gt;&lt;&lt;set _WWName = {
+}&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="EnemySpawner" tags="" position="1157,487" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _WWName = {
 	almiraj:     	80,
 	raven:       	70,
 	rat:			50,
@@ -1070,35 +1075,14 @@ EXPMax - $player.stats.exp.max
 	awakened_shrub: 5
 }&gt;&gt;
 &lt;&lt;set $enemyName to weightedEither(_WWName)&gt;&gt;
+&lt;&lt;set $enemyImg to &quot;e_&quot;+$enemyName+&quot;.png&quot;&gt;&gt;
 &lt;&lt;set $enemy[$enemyName].level to either($player.stats.level-1,$player.stats.level,$player.stats.level+1)&gt;&gt; 
 &lt;&lt;set $enemy[$enemyName].health.curent to $enemy[$enemyName].health.max&gt;&gt;&lt;&lt;/silently&gt;&gt;
-&lt;&lt;if $debug == true&gt;&gt;
-&#39;&#39;New Enemy is arived! it&#39;s $enemy[$enemyName].name!!!&#39;&#39;\
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;button &quot;Стычка!&quot;&gt;&gt;
-	&lt;&lt;replace &quot;#wwname&quot;&gt;&gt;
-		&lt;&lt;set $enemyName to weightedEither(_WWName)&gt;&gt;
-		&lt;&lt;if def $enemy[$enemyName]&gt;&gt;
-		&#39;&#39;New Enemy is arived! it&#39;s $enemy[$enemyName].name!!!&#39;&#39;\
-			&lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
-		&lt;&lt;print &quot;Min: &lt;&lt;=_dmgMin.toFixed(0)&gt;&gt;|Max: &lt;&lt;=_dmgMax.toFixed(0)&gt;&gt;&quot;&gt;&gt; - Curent: $EnemyDmg
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;print &quot;False $enemyName&quot;&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;/replace&gt;&gt;
-&lt;&lt;/button&gt;&gt;&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;nobr&gt;&gt;&lt;span id=&quot;wwname&quot;&gt;
-		&lt;&lt;set $enemyName to weightedEither(_WWName)&gt;&gt;
-		&lt;&lt;if def $enemy[$enemyName]&gt;&gt;
-		&#39;&#39;New Enemy is arived! it&#39;s $enemy[$enemyName].name!!!&#39;&#39;\
-			&lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
-		&lt;&lt;print &quot;Min: &lt;&lt;=_dmgMin.toFixed(0)&gt;&gt;|Max: &lt;&lt;=_dmgMax.toFixed(0)&gt;&gt;&quot;&gt;&gt; - Curent: $EnemyDmg
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;print &quot;False $enemyName&quot;&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-&lt;/span&gt;&lt;&lt;/nobr&gt;&gt;\
-&lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="21" name="EnemysInit" tags="" position="1253,240" size="100,100">&lt;&lt;set $enemy = {}&gt;&gt;
+&lt;&lt;if $debug is true&gt;&gt;
+Curent HP - &lt;&lt;=$enemy[$enemyName].health.curent&gt;&gt;&lt;br&gt;
+Curent enemy IMG - &lt;&lt;=$enemyImg&gt;&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="EnemysInit" tags="" position="1046,488" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $enemy = {}&gt;&gt;
 
 &lt;&lt;set $enemy.almiraj = 
 {
@@ -1258,55 +1242,52 @@ EXPMax - $player.stats.exp.max
 {
 	max: 10+($enemy.awakened_shrub.level-1)*4+$enemy.awakened_shrub.end*(10+$enemy.awakened_shrub.str),
 	curent: 1
-}&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="EnemyDamageCalculation" tags="" position="1366,346" size="100,100">&lt;&lt;set _dmgMin to $enemy[$enemyName].damage.dmgMin&gt;&gt;
+}&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="EnemyDamageCalculation" tags="" position="1270,487" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _dmgMin to $enemy[$enemyName].damage.dmgMin&gt;&gt;
 &lt;&lt;set _dmgMax to $enemy[$enemyName].damage.dmgMax&gt;&gt;
 &lt;&lt;set $EnemyDmg to random(_dmgMin,_dmgMax)+$enemy[$enemyName].dmgMod&gt;&gt; 
-</tw-passagedata><tw-passagedata pid="23" name="Battle" tags="hidemap" position="500,493" size="100,100">&lt;&lt;print $BattleDescription&gt;&gt;
-
-&lt;&lt;if $player.stats.hp.curent &gt; 0 &amp;&amp; $enemy[$enemyName].health.curent &gt; 0&gt;&gt;
-&lt;div class=&quot;heroside&quot;&gt;
-Уровень -- $player.stats.level
-Урон -- $player.stats.damage.min - $player.stats.damage.max
-		----------------
-		[[Удар|BattleRound]] 
-		[[Сбежать|Camp]]
-&lt;/div&gt;&lt;div class=&quot;enemyside&quot;&gt;
-$enemy[$enemyName].name
-Уровень -- $enemy[$enemyName].level
-Урон -- $enemy[$enemyName].damage.dmgMin - $enemy[$enemyName].damage.dmgMax
-		----------------
-&lt;&lt;=$enemy[$enemyName].health.curent.toFixed(0)&gt;&gt; / &lt;&lt;=$enemy[$enemyName].health.max.toFixed(0)&gt;&gt;
-&lt;/div&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
-&lt;&lt;goto &quot;Tent&quot;&gt;&gt;
-&lt;&lt;set $player.stats.hp.curent to 0,$exp to 0,$days += $dDays,$death to true&gt;&gt;
-&lt;&lt;elseif $enemy[$enemyName].health.curent &lt;= 0&gt;&gt;
-&lt;&lt;goto &quot;BattleReward&quot;&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="24" name="BattleReward" tags="" position="372,601" size="100,100">&lt;&lt;set $coinDrop to 5&gt;&gt;
-&lt;&lt;set $expDrop to 5&gt;&gt;
-&lt;&lt;set $player.stats.gold += $coinDrop&gt;&gt;
-&lt;&lt;set $player.stats.exp.curent += $expDrop&gt;&gt;
-&lt;&lt;if $player.stats.exp.curent &gt;= $player.stats.exp.max&gt;&gt;
-  &lt;&lt;set $player.stats.exp.curent -= $player.stats.exp.max&gt;&gt;
-  &lt;&lt;set $player.stats.level++&gt;&gt;
-  &lt;&lt;set $player.stats.cupp++&gt;&gt;
-  &lt;&lt;set $player.stats.hp.curent to $player.stats.hp.max&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;goto &quot;BattleWin&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="HeroDamageCalculation" tags="" position="1364,242" size="100,100">&lt;&lt;silently&gt;&gt;
-&lt;&lt;set _HdmgMin to $player.stats.damage.min&gt;&gt;
+&lt;&lt;set $ehpCur to $enemy[$enemyName].health.curent&gt;&gt;
+&lt;&lt;set $ehpMax to $enemy[$enemyName].health.max&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Battle" tags="hidemap" position="1038,711" size="100,100">
+&lt;&lt;nobr&gt;&gt;
+  &lt;&lt;silently&gt;&gt;
+	&lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
+	  &lt;&lt;set $player.stats.hp.curent to 0&gt;&gt;
+	  &lt;&lt;set $exp to 0&gt;&gt;
+	  &lt;&lt;set $days += $dDays&gt;&gt;
+	  &lt;&lt;set $death to true&gt;&gt;
+	  &lt;&lt;set $BattleState to 2&gt;&gt;
+	  &lt;&lt;elseif $enemy[$enemyName].health.curent &lt;= 0&gt;&gt;
+	  &lt;&lt;set $BattleState to 3&gt;&gt;
+	&lt;&lt;else&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+  &lt;&lt;/silently&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;switch $BattleState&gt;&gt;
+&lt;&lt;case 0&gt;&gt;
+&lt;&lt;include &quot;InitiativeTracker&quot;&gt;&gt;
+/*&lt;&lt;set $BattleDescription to &quot;&lt;&lt;print $PlayerBattleDescription&gt;&gt;&lt;br&gt;&lt;&lt;print $EnemyBattleDescription&gt;&gt;&quot;&gt;&gt;
+&lt;&lt;set $BattleState to 1&gt;&gt;
+&lt;&lt;goto &quot;Battle&quot;&gt;&gt;*/
+&lt;&lt;case 1&gt;&gt;
+	&lt;&lt;include &quot;BattleScreen&quot;&gt;&gt;
+&lt;&lt;case 2&gt;&gt;
+  	&lt;&lt;goto &quot;Tent&quot;&gt;&gt;
+&lt;&lt;case 3&gt;&gt;
+	&lt;&lt;goto &quot;BattleReward&quot;&gt;&gt;
+&lt;&lt;default&gt;&gt;
+&lt;&lt;/switch&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="24" name="HeroDamageCalculation" tags="" position="1162,365" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _HdmgMax to $player.stats.damage.max&gt;&gt;
+&lt;&lt;set _HdmgMin to $player.stats.damage.min&gt;&gt;
 &lt;&lt;set $HeroDmg to random(_HdmgMin,_HdmgMax)&gt;&gt; 
 &lt;&lt;/silently&gt;&gt;
-</tw-passagedata><tw-passagedata pid="26" name="BattleWin" tags="" position="371,494" size="100,100">						Вы победили $enemy[$enemyName].name!
-
-    Внаграду вы получили $coinDrop монет и $expDrop опыта с монстра! 
-
-    [[Продолжить|Outside]] 
-
-    [[В лагерь|Camp]]</tw-passagedata><tw-passagedata pid="27" name="StatsUp" tags="" position="1497,108" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="StatsUp" tags="" position="1433,113" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
 У вас есть &#39;_cupp&#39; очков персонажа для распределения
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;
 ----
@@ -1387,89 +1368,30 @@ $enemy[$enemyName].name
 			&lt;&lt;include &quot;StatsUp&quot;&gt;&gt;
 		&lt;&lt;/replace&gt;&gt;
 	&lt;&lt;/button&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="BattleRound" tags="" position="500,600" size="100,100">&lt;&lt;include &quot;PlayerInitiative&quot;&gt;&gt;
-&lt;&lt;include &quot;EnemyInitiative&quot;&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;&lt;&lt;print $PlayerBattleDescription&gt;&gt;&lt;br&gt;&lt;&lt;print $EnemyBattleDescription&gt;&gt;&quot;&gt;&gt;
-&lt;&lt;goto &quot;Battle&quot;&gt;&gt;
-
-</tw-passagedata><tw-passagedata pid="29" name="BattleStart" tags="" position="771,516" size="100,100">&lt;&lt;set $battle_initiative to random(1,10)&gt;&gt;
-&lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
-&lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
-&lt;&lt;switch $battle_initiative&gt;&gt;
-&lt;&lt;case 1&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;Вы не смогли незаметно атаковать $enemy[$enemyName].name.
-Резким рывком $enemy[$enemyName].name атакует Вас и наносит &lt;&lt;set $EnemyDmg *= 2&gt;&gt;$EnemyDmg урона!&quot;&gt;&gt;
-&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt; 
-&lt;&lt;case 2 3&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;Заметив Вас, $enemy[$enemyName].name бросается в атаку и наносит &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt;
-&lt;&lt;case 4 5&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;Вам почти удалось опередить $enemy[$enemyName].name, но в последний момент он совршает стремительный удар и наносит Вам &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt;
-&lt;&lt;case 6 7&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;В самый последний момент, вам удается атаковать $enemy[$enemyName].name и нанести ему &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
-&lt;&lt;case 8 9&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;Вы атакуете $enemy[$enemyName].name и наносите &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
-&lt;&lt;case 10&gt;&gt;
-&lt;&lt;set $BattleDescription to &quot;Оставшись незамеченным для $enemy[$enemyName].name, вы резким и мощным ударом  атакуете его, и наносите ему &lt;&lt;set $HeroDmg *= 2&gt;&gt; $HeroDmg урона!&quot;&gt;&gt;
-&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
-&lt;&lt;/switch&gt;&gt;
-&lt;&lt;goto &quot;Battle&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="PlayerInitiative" tags="" position="375,736" size="100,100">&lt;&lt;set $player_initiative to random(1,10)&gt;&gt;
-&lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
-&lt;&lt;switch $player_initiative&gt;&gt;
-&lt;&lt;case 1&gt;&gt;
-&lt;&lt;set $PlayerBattleDescription to &quot;Вы не смогли попасть по $enemy[$enemyName].name.&quot;&gt;&gt;
-&lt;&lt;case 2 3&gt;&gt;
-&lt;&lt;set $HeroDmg /= 2&gt;&gt;
-&lt;&lt;set $PlayerBattleDescription to &quot;Поздно заметив атаку $enemy[$enemyName].name вы наносите $HeroDmg урона своей атакой.&quot;&gt;&gt;
-&lt;&lt;case 4 5&gt;&gt;
-&lt;&lt;set $PlayerBattleDescription to &quot;Вам почти удалось опередить $enemy[$enemyName].name, и в вы смогли нанесли &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 6 7&gt;&gt;
-&lt;&lt;set $PlayerBattleDescription to &quot;В самый последний момент, вам удается атаковать $enemy[$enemyName].name и нанести ему &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 8 9&gt;&gt;
-&lt;&lt;set $PlayerBattleDescription to &quot;Вы атакуете $enemy[$enemyName].name и наносите &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 10&gt;&gt;
-&lt;&lt;set $HeroDmg *= 2&gt;&gt; 
-&lt;&lt;set $PlayerBattleDescription to &quot;Вы резким и мощным ударом  атакуете $enemy[$enemyName].name, и наносите ему $HeroDmg урона!&quot;&gt;&gt;
-&lt;&lt;/switch&gt;&gt;
-&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
-
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="EnemyInitiative" tags="" position="483,734" size="100,100">&lt;&lt;set $enemy_initiative to random(1,10)&gt;&gt;
-&lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
-&lt;&lt;switch $enemy_initiative&gt;&gt;
-&lt;&lt;case 1&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name. не смог уклониться от удара.&quot;&gt;&gt;
-&lt;&lt;case 2 3&gt;&gt;
-&lt;&lt;set $EnemyDmg /= 2&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name бросается в атаку и наносит &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 4 5&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name, совершает стремительный удар и наносит &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 6 7&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;В самый последний момент, $enemy[$enemyName].name удается нанести &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 8 9&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name с силой атакует и наносите &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
-&lt;&lt;case 10&gt;&gt;
-&lt;&lt;set $EnemyDmg *= 2&gt;&gt;
-&lt;&lt;set $EnemyBattleDescription to &quot;Резким рывком $enemy[$enemyName].name атакует в полную силу и наносит $EnemyDmg урона!&quot;&gt;&gt;
-&lt;&lt;/switch&gt;&gt;
-&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt; 
-</tw-passagedata><tw-passagedata pid="32" name="CampGates" tags="guard hidemap" position="772,274" size="100,100">Возле выхода из лагеря Вас встречает стражник.
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="CampGates" tags="guard hidemap" position="394,237" size="100,100">Возле выхода из лагеря Вас встречает стражник.&lt;&lt;nobr&gt;&gt;&lt;img @src=&quot;setup.ImagePath+&#39;c_guards.png&#39;&quot; style=&quot;background-position: 45% 45%;background-size: cover;float: right;height: 256px;width: 256px;bottom: 100%;position: sticky;&quot; &gt;&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;if $player.stats.hp.curent &lt;= 10&gt;&gt;
-- &quot;И куда это ты собрался? Да ты же на ногах еле стоишь! Не выпущу! Иди отдохни и подлечись!&quot;
+- &quot;И куда это ты собрался? Да ты же на ногах еле стоишь!&quot;
+- &quot;Не выпущу! Иди отдохни и подлечись!&quot;
 [[Вернуться в лагерь|Camp]]
 &lt;&lt;else&gt;&gt;
 	&lt;&lt;if $training is true&gt;&gt;
-		&lt;&lt;goto &quot;Outside&quot;&gt;&gt;
+		&lt;&lt;switch $gates&gt;&gt;
+		&lt;&lt;case &quot;WestGates&quot;&gt;&gt;
+			&lt;&lt;goto &quot;WestGates&quot;&gt;&gt;
+		&lt;&lt;case &quot;SouthGates&quot;&gt;&gt;
+			&lt;&lt;goto &quot;SouthGates&quot;&gt;&gt;
+		&lt;&lt;default&gt;&gt;
+			&lt;&lt;goto &quot;Outside&quot;&gt;&gt;
+		&lt;&lt;/switch&gt;&gt;
 	&lt;&lt;else&gt;&gt;
-	- &quot;И куда это ты собрался? Да ты же на ногах еле стоишь! Не выпущу! Иди хоть меч научись держать правильно! Тебя же в первом бою порвут!&quot;	
+	- &quot;И куда это ты собрался? Ты хотя бы знаешь, какой стороной меч держать?&quot;
+	- &quot;Ступай, к тренеру. Глядишь, сможет хотя бы чему-то научить тебя. Может хотя бы от крыс шарахаться перестанешь!&quot;
 [[Вернуться в лагерь|Camp]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-</tw-passagedata><tw-passagedata pid="33" name="Training" tags="hidemap" position="795,21" size="100,100">- &quot;Ну, что же. Приступим! Покажи ка мне, на что ты способен!&quot;
+</tw-passagedata><tw-passagedata pid="27" name="Training" tags="hidemap" position="643,114" size="100,100">- &quot;Ну, что же. Приступим! Покажи ка мне, на что ты способен!&quot;
 
-&lt;div id=&quot;event&quot;&gt;&lt;&lt;include &quot;TrainUp&quot;&gt;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="34" name="TrainUp" tags="" position="799,128" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
+&lt;div id=&quot;event&quot;&gt;&lt;&lt;include &quot;TrainUp&quot;&gt;&gt;&lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="TrainUp" tags="" position="637,12" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $cupp &gt; 0&gt;&gt;
 У вас есть &#39;_cupp&#39; очков персонажа для распределения
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;
 ----
@@ -1544,8 +1466,7 @@ $enemy[$enemyName].name
 
 &lt;&lt;if $cupp &gt; 0 &amp;&amp; _cupp is 0&gt;&gt;
 [[Закончить тренировку|TrainingFields][$player.stats.cupp to _cupp, $cupp to $player.stats.cupp, $TrainerTalks to 1, $training to true]]
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="PassageDone" tags="" position="71,584" size="100,100">&lt;&lt;script&gt;&gt;
-
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="PassageDone" tags="" position="11,441" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;script&gt;&gt;
 // Apply maphilight to all images that have a usemap attribute, e.g.
 // all the maps that are in this twine. This sets the default styling
 // for all the maps. These are all the possible styling options.
@@ -1574,24 +1495,260 @@ $(&quot;img[usemap]&quot;).maphilight({
   shadowFrom: false
 });
 
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="MiniMap" tags="" position="1701,617" size="100,100">&lt;&lt;set _src = &quot;http://www.fallofbabylon.ru/twine/DAP/camp_map_256_.png&quot;&gt;&gt;
+&lt;&lt;/script&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="MiniMap" tags="" position="17,768" size="100,100">&lt;&lt;set _src = &quot;http://www.fallofbabylon.ru/twine/DAP/camp_map_256_.png&quot;&gt;&gt;
 &lt;div id=&quot;map&quot;&gt;
 	&lt;img class=&quot;map&quot; usemap=&quot;#image-map&quot; style=&quot;left: 0px; bottom: 0px;width: 100%; height: 100%;&quot; @src=&quot;_src&quot;&gt;
 &lt;map name=&quot;image-map&quot;&gt;
     &lt;area alt=&quot;trader&quot; title=&quot;trader&quot; href=&quot;&quot; coords=&quot;102,59,188,100&quot; shape=&quot;rect&quot;&gt;
-    &lt;area alt=&quot;tent&quot; title=&quot;tent&quot; data-passage=&quot;Tent&quot; coords=&quot;58,52,90,89&quot; shape=&quot;rect&quot;&gt;
-    &lt;area alt=&quot;campfire&quot; title=&quot;campfire&quot;  coords=&quot;94,113,118,141&quot; shape=&quot;rect&quot;&gt;
-    &lt;area alt=&quot;train&quot; title=&quot;train&quot; href=&quot;&quot; coords=&quot;199,86,236,173&quot; shape=&quot;rect&quot;&gt;
-    &lt;area alt=&quot;west&quot; title=&quot;west&quot; href=&quot;&quot; coords=&quot;19,89,0,152&quot; shape=&quot;rect&quot;&gt;
-    &lt;area alt=&quot;south&quot; title=&quot;south&quot; href=&quot;&quot; coords=&quot;127,181,184,255&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;tent&quot; title=&quot;Tent&quot; data-passage=&quot;Tent&quot; coords=&quot;58,52,90,89&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;campfire&quot; title=&quot;Campfire&quot; data-passage=&quot;CampChef&quot;  coords=&quot;94,113,118,141&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;train&quot; title=&quot;Training Fields&quot; data-passage=&quot;TrainingFields&quot; coords=&quot;199,86,236,173&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;west&quot; title=&quot;west&quot; onclick=&quot;$.wiki(&#39;&lt;&lt;goto &amp;quot;CampGates&amp;quot;&gt;&gt;&lt;&lt;set $gates to &amp;quot;WestGates&amp;quot;&gt;&gt;&#39;)&quot; coords=&quot;19,89,0,152&quot; shape=&quot;rect&quot;&gt;
+    &lt;area alt=&quot;south&quot; title=&quot;south&quot; onclick=&quot;$.wiki(&#39;&lt;&lt;goto &amp;quot;CampGates&amp;quot;&gt;&gt;&lt;&lt;set $gates to &amp;quot;SouthGates&amp;quot;&gt;&gt;&#39;)&quot; coords=&quot;127,181,184,255&quot; shape=&quot;rect&quot;&gt;
 &lt;/map&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="StoryMinimapBar" tags="" position="1698,509" size="100,100">&lt;&lt;include &quot;MiniMap&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="BeginStory" tags="camp" position="305,7.5" size="100,100">&lt;&lt;if $init != true&gt;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="31" name="StoryMinimapBar" tags="" position="14,660" size="100,100">&lt;&lt;include &quot;MiniMap&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="BeginStory" tags="camp hidemap" position="118,6.5" size="100,100">&lt;&lt;if $init != true&gt;&gt;
 Вы просыпаетесь в лагере, ваша голова болит, а воспоминания смутные...
 Что будете делать?
 &lt;&lt;link &quot;Поискать с кем бы поговорить&quot; CampChef&gt;&gt;&lt;&lt;set $ChefTalks to 0&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;link &quot;Вернуться в палатку&quot; Rest&gt;&gt;&lt;&lt;set $fullrest to true, $training to false&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata></tw-storydata>
+&lt;&lt;/if&gt;&gt;
+</tw-passagedata><tw-passagedata pid="33" name="BattleTest" tags="" position="2805.666666666667,251.5" size="100,100">&lt;&lt;include &quot;EnemySpawner&quot;&gt;&gt;
+&lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
+&lt;&lt;print $BattleDescription&gt;&gt;
+&lt;&lt;if $player.stats.hp.curent &gt; 0 &amp;&amp; $enemy[$enemyName].health.curent &gt; 0&gt;&gt;
+&lt;div class=&quot;heroside&quot;&gt;
+Уровень -- $player.stats.level
+Урон -- $player.stats.damage.min - $player.stats.damage.max
+		----------------
+		[[Удар|BattleTest]] 
+		[[Сбежать|Testing]]
+		&lt;button data-passage=&quot;$PrevPassage&quot;&gt;RUN!!!&lt;/button&gt;
+&lt;/div&gt;&lt;div class=&quot;enemyside&quot;&gt;
+$enemy[$enemyName].name
+Уровень -- $enemy[$enemyName].level
+Урон -- $enemy[$enemyName].damage.dmgMin - $enemy[$enemyName].damage.dmgMax
+		----------------
+&lt;&lt;=$enemy[$enemyName].health.curent.toFixed(0)&gt;&gt; / &lt;&lt;=$enemy[$enemyName].health.max.toFixed(0)&gt;&gt;
+&lt;/div&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $player.stats.hp.curent &lt;= 0&gt;&gt;
+&lt;&lt;goto &quot;Tent&quot;&gt;&gt;
+&lt;&lt;set $player.stats.hp.curent to 0,$exp to 0,$days += $dDays,$death to true&gt;&gt;
+&lt;&lt;elseif $enemy[$enemyName].health.curent &lt;= 0&gt;&gt;
+&lt;&lt;goto &quot;BattleReward&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="InventoryTest" tags="" position="2476.666666666667,490" size="100,100">
+Weapons:\
+&lt;&lt;capture _i&gt;&gt;&lt;&lt;for _i = 0; _i &lt; $inv.weapons.length; _i++&gt;&gt;\
+&lt;&lt;set _invw = &quot;invw&quot; + (_i + 1)&gt;&gt;\
+&lt;span @id=&quot;_invw&quot; title=&quot;Click to make this the primary weapon&quot;&gt; &lt;&lt;link $inv.weapons[_i].name&gt;&gt;
+	&lt;&lt;set _tempw = $inv.weapons[_i]&gt;&gt;
+	&lt;&lt;set $inv.weapons[_i] = $inv.weapons[0]&gt;&gt;
+	&lt;&lt;set $inv.weapons[0] = _tempw&gt;&gt;
+	&lt;&lt;set _invw = &quot;#invw&quot; + (_i + 1)&gt;&gt;
+	&lt;&lt;run $(&quot;#invw1 a&quot;).empty().wiki(&quot; &quot; + $inv.weapons[0].name)&gt;&gt;
+	&lt;&lt;run $(_invw + &quot; a&quot;).empty().wiki(&quot; &quot; + $inv.weapons[_i].name)&gt;&gt;
+&lt;&lt;/link&gt;&gt;&lt;&lt;if _i == 0&gt;&gt; (primary)&lt;&lt;/if&gt;&gt;&lt;/span&gt;\
+&lt;&lt;if _i &lt; $inv.weapons.length - 1&gt;&gt; |&lt;&lt;/if&gt;&gt;\
+&lt;&lt;/for&gt;&gt;&lt;&lt;/capture&gt;&gt;
+
+Armor:\
+&lt;&lt;capture _a&gt;&gt;&lt;&lt;for _a = 0; _a &lt; $inv.armors.length; _a++&gt;&gt;\
+&lt;&lt;set _inva = &quot;inva&quot; + (_a + 1)&gt;&gt;\
+&lt;span @id=&quot;_inva&quot; title=&quot;Click to make this the curent armor&quot;&gt; &lt;&lt;link $inv.armors[_a].name&gt;&gt;
+	&lt;&lt;set _tempa = $inv.armors[_a]&gt;&gt;
+	&lt;&lt;set $inv.armors[_a] = $inv.armors[0]&gt;&gt;
+	&lt;&lt;set $inv.armors[0] = _tempa&gt;&gt;
+	&lt;&lt;set _inva = &quot;#inva&quot; + (_a + 1)&gt;&gt;
+	&lt;&lt;run $(&quot;#inva1 a&quot;).empty().wiki(&quot; &quot; + $inv.armors[0].name)&gt;&gt;
+	&lt;&lt;run $(_inva + &quot; a&quot;).empty().wiki(&quot; &quot; + $inv.armors[_a].name)&gt;&gt;
+&lt;&lt;/link&gt;&gt;&lt;&lt;if _a == 0&gt;&gt; (curent)&lt;&lt;/if&gt;&gt;&lt;/span&gt;\
+&lt;&lt;if _a &lt; $inv.armors.length - 1&gt;&gt; |&lt;&lt;/if&gt;&gt;\
+&lt;&lt;/for&gt;&gt;&lt;&lt;/capture&gt;&gt;
+
+
+----
+	&lt;&lt;=$player.stats.wdmg&gt;&gt;
+	&lt;&lt;=$player.stats.dmg&gt;&gt;
+----
+[[Trader|InventoryTestRoom]]</tw-passagedata><tw-passagedata pid="35" name="InventoryTestRoom" tags="" position="2603.666666666667,488" size="100,100">BUY
+----
+/*&lt;&lt;for _w = 0; _w &lt; $TraderWeapons.length; _w++&gt;&gt;
+&lt;&lt;set _tradeWName to $TraderWeapons[_w].name&gt;&gt;\
+&lt;&lt;set $id =&quot;$id&quot;+_w&gt;&gt;\
+&lt;&lt;=$id&gt;&gt;.[[_tradeWName|InventoryTest][$inv.weapons.push({name: &quot;$TraderWeapons[$id].name&quot;}), $TraderWeapons.delete({name: &quot;_tradeWName&quot;})]]
+&lt;&lt;/for&gt;&gt;*/
+
+[[Sword|InventoryTest][$inv.weapons.pushUnique({name: &quot;Sword&quot;})]]
+[[Mace|InventoryTest][$inv.weapons.pushUnique({name: &quot;Mace&quot;})]]
+[[Battle Axe|InventoryTest][$inv.weapons.pushUnique({name: &quot;Battle Axe&quot;})]]
+----
+[[Cloth Armor|InventoryTest][$inv.armors.pushUnique({name: &quot;Cloth Armor&quot;})]]
+[[Leather Armor|InventoryTest][$inv.armors.pushUnique({name: &quot;Leather Armor&quot;})]]
+[[Iron Armor|InventoryTest][$inv.armors.pushUnique({name: &quot;Iron Armor&quot;})]]
+----
+----
+
+SELL
+----
+</tw-passagedata><tw-passagedata pid="36" name="MapHistory" tags="" position="14,550.5" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if previous() is &quot;Camp&quot;&gt;&gt;
+	&lt;&lt;set $PrevPassage to &quot;Camp&quot;&gt;&gt;
+&lt;&lt;elseif previous() is &quot;MountainRoad&quot;&gt;&gt;
+	&lt;&lt;set $PrevPassage to &quot;MountainRoad&quot;&gt;&gt;
+&lt;&lt;elseif previous() is &quot;ForestRoad&quot;&gt;&gt;
+	&lt;&lt;set $PrevPassage to &quot;ForestRoad&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+	&lt;&lt;set $PrevPassage to &quot;Camp&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="WestGates" tags="" position="249,240" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $PrevPassage to passage()&gt;&gt;&lt;&lt;include &quot;EncoutersInit&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+[[Побродить по округе|WestGates][$encouters to either(&quot;loot&quot;,&quot;battle&quot;,&quot;nothing&quot;)]]
+[[Дорога в горы|MountainRoad]]</tw-passagedata><tw-passagedata pid="38" name="SouthGates" tags="" position="542,255" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $PrevPassage to passage()&gt;&gt;&lt;&lt;include &quot;EncoutersInit&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+[[Побродить по округе|SouthGates][$encouters to either(&quot;loot&quot;,&quot;battle&quot;,&quot;nothing&quot;)]]
+[[Дорога в горы|ForestRoad]]</tw-passagedata><tw-passagedata pid="39" name="BattleTestForest" tags="" position="2576.666666666667,170" size="100,100">You in forest
+[[Тест битвы|BattleTest]] </tw-passagedata><tw-passagedata pid="40" name="BattleTestMountain" tags="" position="2616.666666666667,354" size="100,100">You in mountains
+[[Тест битвы|BattleTest]] </tw-passagedata><tw-passagedata pid="41" name="MountainRoad" tags="" position="248,354" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $PrevPassage to passage()&gt;&gt;&lt;&lt;include &quot;EncoutersInit&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+[[Побродить по округе|MountainRoad][$encouters to either(&quot;loot&quot;,&quot;battle&quot;,&quot;nothing&quot;)]]
+[[Продолжить путь|MountainRoad]]</tw-passagedata><tw-passagedata pid="42" name="ForestRoad" tags="" position="541,370" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $PrevPassage to passage()&gt;&gt;&lt;&lt;include &quot;EncoutersInit&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+[[Побродить по округе|ForestRoad][$encouters to either(&quot;loot&quot;,&quot;battle&quot;,&quot;nothing&quot;)]]
+[[Продолжить путь|ForestRoad]]</tw-passagedata><tw-passagedata pid="43" name="InitiativeTracker" tags="" position="1352,714.5" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set $player_initiative to random(1,10)&gt;&gt;
+&lt;&lt;include &quot;HeroDamageCalculation&quot;&gt;&gt;
+&lt;&lt;switch $player_initiative&gt;&gt;
+&lt;&lt;case 1&gt;&gt;
+&lt;&lt;set $PlayerBattleDescription to &quot;Вы не смогли попасть по $enemy[$enemyName].name.&quot;&gt;&gt;
+&lt;&lt;case 2 3&gt;&gt;
+&lt;&lt;set $HeroDmg /= 2&gt;&gt;
+&lt;&lt;set $PlayerBattleDescription to &quot;Поздно заметив атаку $enemy[$enemyName].name вы наносите $HeroDmg урона своей атакой.&quot;&gt;&gt;
+&lt;&lt;case 4 5&gt;&gt;
+&lt;&lt;set $PlayerBattleDescription to &quot;Вам почти удалось опередить $enemy[$enemyName].name, и в вы смогли нанесли &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 6 7&gt;&gt;
+&lt;&lt;set $PlayerBattleDescription to &quot;В самый последний момент, вам удается атаковать $enemy[$enemyName].name и нанести ему &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 8 9&gt;&gt;
+&lt;&lt;set $PlayerBattleDescription to &quot;Вы атакуете $enemy[$enemyName].name и наносите &lt;&lt;=$HeroDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 10&gt;&gt;
+&lt;&lt;set $HeroDmg *= 2&gt;&gt; 
+&lt;&lt;set $PlayerBattleDescription to &quot;Вы резким и мощным ударом  атакуете $enemy[$enemyName].name, и наносите ему $HeroDmg урона!&quot;&gt;&gt;
+&lt;&lt;/switch&gt;&gt;
+&lt;&lt;set $enemy[$enemyName].health.curent -= $HeroDmg&gt;&gt;
+/*----*/
+&lt;&lt;set $enemy_initiative to random(1,10)&gt;&gt;
+&lt;&lt;include &quot;EnemyDamageCalculation&quot;&gt;&gt;
+&lt;&lt;switch $enemy_initiative&gt;&gt;
+&lt;&lt;case 1&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name. не смог уклониться от удара.&quot;&gt;&gt;
+&lt;&lt;case 2 3&gt;&gt;
+&lt;&lt;set $EnemyDmg /= 2&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name бросается в атаку и наносит &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 4 5&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name, совершает стремительный удар и наносит &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 6 7&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;В самый последний момент, $enemy[$enemyName].name удается нанести &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 8 9&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;$enemy[$enemyName].name с силой атакует и наносите &lt;&lt;=$EnemyDmg&gt;&gt; урона!&quot;&gt;&gt;
+&lt;&lt;case 10&gt;&gt;
+&lt;&lt;set $EnemyDmg *= 2&gt;&gt;
+&lt;&lt;set $EnemyBattleDescription to &quot;Резким рывком $enemy[$enemyName].name атакует в полную силу и наносит $EnemyDmg урона!&quot;&gt;&gt;
+&lt;&lt;/switch&gt;&gt;
+&lt;&lt;set $player.stats.hp.curent -= $EnemyDmg&gt;&gt; 
+/*------------*/
+&lt;&lt;set $BattleDescription to &quot;&lt;&lt;print $PlayerBattleDescription&gt;&gt;&lt;br&gt;&lt;&lt;print $EnemyBattleDescription&gt;&gt;&quot;&gt;&gt;
+&lt;&lt;set $BattleState to 1&gt;&gt;
+&lt;&lt;goto &quot;Battle&quot;&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="BattleReward" tags="" position="1250,714.8333333333334" size="100,100">&lt;&lt;set $coinDrop to 5&gt;&gt;
+&lt;&lt;set $expDrop to 5&gt;&gt;
+&lt;&lt;set $player.stats.gold += $coinDrop&gt;&gt;
+&lt;&lt;set $player.stats.exp.curent += $expDrop&gt;&gt;
+&lt;&lt;if $player.stats.exp.curent &gt;= $player.stats.exp.max&gt;&gt;
+  &lt;&lt;set $player.stats.exp.curent -= $player.stats.exp.max&gt;&gt;
+  &lt;&lt;set $player.stats.level++&gt;&gt;
+  &lt;&lt;set $player.stats.cupp++&gt;&gt;
+  &lt;&lt;set $player.stats.hp.curent to $player.stats.hp.max&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;notify&gt;&gt;Earned -- GOLD: $coinDrop, EXP: $expDrop!&lt;&lt;/notify&gt;&gt;
+&lt;&lt;goto $PrevPassage&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="BattleScreen" tags="" position="1148.6666666666667,713.5" size="100,100">  &lt;&lt;nobr&gt;&gt;&lt;&lt;print $BattleDescription&gt;&gt;&lt;&lt;/nobr&gt;&gt;
+  &lt;div class=&quot;heroside&quot;&gt;
+  &lt;&lt;nobr&gt;&gt;&lt;img @src=&quot;setup.ImagePath+&#39;c_hero.png&#39;&quot; style=&quot;background-position: 45% 45%;background-size: cover;height: 128px;width: 128px;bottom: 100%;position: sticky;&quot; &gt;&lt;&lt;/nobr&gt;&gt;
+  Уровень -- $player.stats.level
+  Урон -- $player.stats.damage.min - $player.stats.damage.max
+		  ----------------
+		  &lt;&lt;button &quot;Удар&quot; &quot;Battle&quot;&gt;&gt;&lt;&lt;set $BattleState to 0&gt;&gt;&lt;&lt;/button&gt;&gt;
+		  
+		  &lt;button data-passage=&quot;$PrevPassage&quot;&gt;Сбежать&lt;/button&gt;
+		  
+		  &lt;button data-passage=&quot;BattleRound&quot;&gt;Удар&lt;/button&gt;
+		  &lt;button data-passage=&quot;$PrevPassage&quot;&gt;Сбежать&lt;/button&gt;
+  &lt;/div&gt;&lt;div class=&quot;enemyside&quot;&gt;
+  &lt;&lt;nobr&gt;&gt;&lt;img @src=&quot;setup.ImagePath+$enemyImg&quot; style=&quot;background-position: 45% 45%;background-size: cover;height: 128px;width: 128px;bottom: 100%;position: sticky;&quot; &gt;&lt;&lt;/nobr&gt;&gt;
+  $enemy[$enemyName].name
+  Уровень -- $enemy[$enemyName].level
+  Урон -- $enemy[$enemyName].damage.dmgMin - $enemy[$enemyName].damage.dmgMax
+		  ----------------
+		  &lt;&lt;include &quot;eHPBar&quot;&gt;&gt;
+  &lt;&lt;=$enemy[$enemyName].health.curent.toFixed(0)&gt;&gt; / &lt;&lt;=$enemy[$enemyName].health.max.toFixed(0)&gt;&gt;
+  &lt;/div&gt;</tw-passagedata><tw-passagedata pid="46" name="eHPBar" tags="" position="1383,484" size="100,100">&lt;div id=&quot;horizontalhealthbarbkg&quot; class=&quot;hzbarbkg&quot;&gt;&lt;div id=&quot;horizontalhealthbar&quot; class=&quot;hzbar&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;&lt;script&gt;&gt;$(document).one(&#39;:passagerender&#39;, function (ev) {
+	Health(State.variables.ehpCur, State.variables.ehpMax, &quot;horizontalhealthbar&quot;, true, ev.content);
+});&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="HeroInit" tags="" position="1043,366" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $player = {}&gt;&gt;
+&lt;&lt;set $inv = {}&gt;&gt;
+&lt;&lt;set $player.stats = 
+{
+  level: 1, 
+  str: 1, 
+  perc: 1, 
+  end: 1, 
+  charm: 1, 
+  intel: 1, 
+  agil: 1, 
+  dmg: 1,
+  wdmg: 0,
+  cupp:0,
+  gold: 0
+}&gt;&gt;
+&lt;&lt;set $player.stats.hp = 
+  {
+	max: 10+($player.stats.level-1)*4+$player.stats.end*(10+$player.stats.str),
+	curent: 1
+  }&gt;&gt;
+&lt;&lt;set $player.stats.exp = 
+  {
+	max: (5*($player.stats.level+1)+10)*(1-$player.stats.intel*(3/100)),
+	curent: 0
+  }&gt;&gt;
+&lt;&lt;set $player.stats.damage = 
+  {
+	max: ($player.stats.dmg+$player.stats.wdmg)*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)*2,
+	min: ($player.stats.dmg+$player.stats.wdmg)*($player.stats.dmg*$player.stats.agil)+($player.stats.end+$player.stats.str)/2
+  }&gt;&gt;
+  &lt;&lt;set $player.skills = 
+  {
+	healRate: $player.stats.end/10,
+	goldDropRate: $player.stats.perc/100,
+  }&gt;&gt;
+ &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="EncoutersInit" tags="" position="1151,606" size="100,100">&lt;&lt;switch $encouters&gt;&gt;
+&lt;&lt;case &quot;loot&quot;&gt;&gt;
+	&lt;&lt;set $encouters to &quot;&quot;&gt;&gt;
+	&lt;&lt;goto &quot;BattleReward&quot;&gt;&gt;
+&lt;&lt;case &quot;battle&quot;&gt;&gt;
+	&lt;&lt;set $encouters to &quot;&quot;&gt;&gt;
+	&lt;&lt;goto &quot;Outside&quot;&gt;&gt;
+&lt;&lt;default&gt;&gt;
+	&lt;&lt;set $encouters to &quot;&quot;&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
 	if(document.documentElement.getAttribute("data-init")==="loading"){!function(window,document,jQuery,undefined){"use strict";function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)}var _createClass=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),_slicedToArray=function(){function e(e,t){var r=[],n=!0,a=!1,i=undefined;try{for(var o,s=e[Symbol.iterator]();!(n=(o=s.next()).done)&&(r.push(o.value),!t||r.length!==t);n=!0);}catch(e){a=!0,i=e}finally{try{!n&&s.return&&s.return()}finally{if(a)throw i}}return r}return function(t,r){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,r);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},errorPrologRegExp=/^(?:(?:uncaught\s+(?:exception:\s+)?)?\w*(?:error|exception|_err):\s+)+/i,Alert=function(){function e(e,t,r,n){var a="fatal"===e,i="Apologies! "+(a?"A fatal":"An")+" error has occurred.";i+=a?" Aborting.":" You may be able to continue, but some parts may not work properly.",null==t&&null==r||(i+="\n\nError",null!=t&&(i+=" ["+t+"]"),i+=null!=r?": "+r.replace(errorPrologRegExp,"")+".":": unknown error."),"object"===(void 0===n?"undefined":_typeof(n))&&null!==n&&n.stack&&(i+="\n\nStack Trace:\n"+n.stack),window.alert(i)}function t(t,r,n){e(null,t,r,n)}function r(t,r,n){e("fatal",t,r,n)}return function(e){window.onerror=function(n,a,i,o,s){"complete"===document.readyState?t(null,n,s):(r(null,n,s),window.onerror=e,"function"==typeof window.onerror&&window.onerror.apply(this,arguments))}}(window.onerror),Object.freeze(Object.defineProperties({},{error:{value:t},fatal:{value:r}}))}(),Patterns=function(){var e=function(){var e=new Map([[" ","\\u0020"],["\f","\\f"],["\n","\\n"],["\r","\\r"],["\t","\\t"],["\v","\\v"],[" ","\\u00a0"],[" ","\\u1680"],["᠎","\\u180e"],[" ","\\u2000"],[" ","\\u2001"],[" ","\\u2002"],[" ","\\u2003"],[" ","\\u2004"],[" ","\\u2005"],[" ","\\u2006"],[" ","\\u2007"],[" ","\\u2008"],[" ","\\u2009"],[" ","\\u200a"],["\u2028","\\u2028"],["\u2029","\\u2029"],[" ","\\u202f"],[" ","\\u205f"],["　","\\u3000"],["\ufeff","\\ufeff"]]),t=/^\s$/,r="";return e.forEach(function(e,n){t.test(n)||(r+=e)}),r?"[\\s"+r+"]":"\\s"}(),t="[\\u0020\\f\\t\\v\\u00a0\\u1680\\u180e\\u2000-\\u200a\\u202f\\u205f\\u3000\\ufeff]",r="\\s"===e?"\\S":e.replace(/^\[/,"[^"),n="[0-9A-Z_a-z\\-\\u00c0-\\u00d6\\u00d8-\\u00f6\\u00f8-\\u00ff\\u0150\\u0170\\u0151\\u0171]",a=n.replace("\\-",""),i=function(){var e="(?:[\\x2D.0-9A-Z_a-z\\xB7\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\u037D\\u037F-\\u1FFF\\u200C\\u200D\\u203F\\u2040\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD]|[\\uD800-\\uDB7F][\\uDC00-\\uDFFF])";return"[A-Za-z](?:"+e+"*-"+e+"*|[0-9A-Za-z]*)"}(),o=function(){return"("+n+"+)\\(([^\\)\\|\\n]+)\\):|"+t+"*("+n+"+)"+t+"*:([^;\\|\\n]+);|"+t+"*((?:[#.]"+n+"+"+t+"*)+);"}();return Object.freeze({space:e,spaceNoTerminator:t,lineTerminator:"[\\n\\r\\u2028\\u2029]",notSpace:r,anyChar:"(?:.|[\\n\\r\\u2028\\u2029])",anyLetter:n,anyLetterStrict:a,identifierFirstChar:"[$A-Z_a-z]",identifierNextChar:"[$0-9A-Z_a-z]",identifier:"[$A-Z_a-z][$0-9A-Z_a-z]*",variableSigil:"[$_]",variable:"[$_][$A-Z_a-z][$0-9A-Z_a-z]*",macroName:"[A-Za-z][\\w-]*|[=-]",templateName:"[A-Za-z][\\w-]*",htmlTagName:i,cssIdOrClassSigil:"[#.]",cssImage:"\\[[<>]?[Ii][Mm][Gg]\\[(?:\\s|\\S)*?\\]\\]+",inlineCss:o,url:"(?:file|https?|mailto|ftp|javascript|irc|news|data):[^\\s'\"]+"})}();!function(){function e(e,t){var r=Number.parseInt(e,10)||0;if(r<1)return"";var n=void 0===t?"":String(t);for(""===n&&(n=" ");n.length<r;){var a=n.length,i=r-a;n+=a>i?n.slice(0,i):n}return n.length>r&&(n=n.slice(0,r)),n}var t=function(){function e(e,n){var a=String(e);if(!a)return a;switch(n){case"start":return t.test(a)?a.replace(t,""):a;case"end":return r.test(a)?a.replace(r,""):a;default:throw new Error('_trimString called with incorrect where parameter value: "'+n+'"')}}var t=new RegExp("^"+Patterns.space+Patterns.space+"*"),r=new RegExp(""+Patterns.space+Patterns.space+"*$");return e}();Array.prototype.flat||Object.defineProperty(Array.prototype,"flat",{configurable:!0,writable:!0,value:function(){function e(){if(null==this)throw new TypeError("Array.prototype.flat called on null or undefined");var t=0===arguments.length?1:Number(arguments[0])||0;return t<1?Array.prototype.slice.call(this):Array.prototype.reduce.call(this,function(r,n){return n instanceof Array?r.push.apply(r,_toConsumableArray(e.call(n,t-1))):r.push(n),r},[])}return e}()}),Array.prototype.flatMap||Object.defineProperty(Array.prototype,"flatMap",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.flatMap called on null or undefined");return Array.prototype.map.apply(this,arguments).flat()}}),Array.prototype.includes||Object.defineProperty(Array.prototype,"includes",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includes called on null or undefined");if(0===arguments.length)return!1;var e=this.length>>>0;if(0===e)return!1;var t=arguments[0],r=Number(arguments[1])||0;for(r<0&&(r=Math.max(0,e+r));r<e;++r){var n=this[r];if(n===t||n!==n&&t!==t)return!0}return!1}}),Object.entries||Object.defineProperty(Object,"entries",{configurable:!0,writable:!0,value:function(e){if("object"!==(void 0===e?"undefined":_typeof(e))||null===e)throw new TypeError("Object.entries object parameter must be an object");return Object.keys(e).map(function(t){return[t,e[t]]})}}),Object.fromEntries||Object.defineProperty(Object,"fromEntries",{configurable:!0,writable:!0,value:function(e){return Array.from(e).reduce(function(e,t){if(Object(t)!==t)throw new TypeError("Object.fromEntries iterable parameter must yield objects");return t[0]in e?Object.defineProperty(e,t[0],{configurable:!0,enumerable:!0,writable:!0,value:t[1]}):e[t[0]]=t[1],e},{})}}),Object.getOwnPropertyDescriptors||Object.defineProperty(Object,"getOwnPropertyDescriptors",{configurable:!0,writable:!0,value:function(e){if(null==e)throw new TypeError("Object.getOwnPropertyDescriptors object parameter is null or undefined");var t=Object(e);return Reflect.ownKeys(t).reduce(function(e,r){var n=Object.getOwnPropertyDescriptor(t,r);return void 0!==n&&(r in e?Object.defineProperty(e,r,{configurable:!0,enumerable:!0,writable:!0,value:n}):e[r]=n),e},{})}}),Object.values||Object.defineProperty(Object,"values",{configurable:!0,writable:!0,value:function(e){if("object"!==(void 0===e?"undefined":_typeof(e))||null===e)throw new TypeError("Object.values object parameter must be an object");return Object.keys(e).map(function(t){return e[t]})}}),String.prototype.padStart||Object.defineProperty(String.prototype,"padStart",{configurable:!0,writable:!0,value:function(t,r){if(null==this)throw new TypeError("String.prototype.padStart called on null or undefined");var n=String(this),a=n.length,i=Number.parseInt(t,10);return i<=a?n:e(i-a,r)+n}}),String.prototype.padEnd||Object.defineProperty(String.prototype,"padEnd",{configurable:!0,writable:!0,value:function(t,r){if(null==this)throw new TypeError("String.prototype.padEnd called on null or undefined");var n=String(this),a=n.length,i=Number.parseInt(t,10);return i<=a?n:n+e(i-a,r)}}),String.prototype.trimStart||Object.defineProperty(String.prototype,"trimStart",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimStart called on null or undefined");return t(this,"start")}}),String.prototype.trimLeft||Object.defineProperty(String.prototype,"trimLeft",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimLeft called on null or undefined");return t(this,"start")}}),String.prototype.trimEnd||Object.defineProperty(String.prototype,"trimEnd",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimEnd called on null or undefined");return t(this,"end")}}),String.prototype.trimRight||Object.defineProperty(String.prototype,"trimRight",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.trimRight called on null or undefined");return t(this,"end")}})}(),function(){function _random(){var e=void 0,t=void 0;switch(arguments.length){case 0:throw new Error("_random called with insufficient parameters");case 1:e=0,t=arguments[0];break;default:e=arguments[0],t=arguments[1]}if(e>t){var r=[t,e];e=r[0],t=r[1]}return Math.floor(_nativeMathRandom()*(t-e+1))+e}function _randomIndex(e,t){var r=void 0,n=void 0;switch(t.length){case 1:r=0,n=e-1;break;case 2:r=0,n=Math.trunc(t[1]);break;default:r=Math.trunc(t[1]),n=Math.trunc(t[2])}return Number.isNaN(r)?r=0:!Number.isFinite(r)||r>=e?r=e-1:r<0&&(r=e+r)<0&&(r=0),Number.isNaN(n)?n=0:!Number.isFinite(n)||n>=e?n=e-1:n<0&&(n=e+n)<0&&(n=e-1),_random(r,n)}function _getCodePointStartAndEnd(e,t){var r=e.charCodeAt(t);if(Number.isNaN(r))return{char:"",start:-1,end:-1};if(r<55296||r>57343)return{char:e.charAt(t),start:t,end:t};if(r>=55296&&r<=56319){var n=t+1;if(n>=e.length)throw new Error("high surrogate without trailing low surrogate");var a=e.charCodeAt(n);if(a<56320||a>57343)throw new Error("high surrogate without trailing low surrogate");return{char:e.charAt(t)+e.charAt(n),start:t,end:n}}if(0===t)throw new Error("low surrogate without leading high surrogate");var i=t-1,o=e.charCodeAt(i);if(o<55296||o>56319)throw new Error("low surrogate without leading high surrogate");return{char:e.charAt(i)+e.charAt(t),start:i,end:t}}var _nativeMathRandom=Math.random;Object.defineProperty(Array,"random",{configurable:!0,writable:!0,value:function(e){if("object"!==(void 0===e?"undefined":_typeof(e))||null===e||!Object.prototype.hasOwnProperty.call(e,"length"))throw new TypeError("Array.random array parameter must be an array or array-lke object");var t=e.length>>>0;if(0!==t){return e[0===arguments.length?_random(0,t-1):_randomIndex(t,Array.prototype.slice.call(arguments,1))]}}}),Object.defineProperty(Array.prototype,"concatUnique",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.concatUnique called on null or undefined");var e=Array.from(this);if(0===arguments.length)return e;var t=Array.prototype.reduce.call(arguments,function(e,t){return e.concat(t)},[]),r=t.length;if(0===r)return e;for(var n=Array.prototype.indexOf,a=Array.prototype.push,i=0;i<r;++i){var o=t[i];-1===n.call(e,o)&&a.call(e,o)}return e}}),Object.defineProperty(Array.prototype,"count",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.count called on null or undefined");for(var e=Array.prototype.indexOf,t=arguments[0],r=Number(arguments[1])||0,n=0;-1!==(r=e.call(this,t,r));)++n,++r;return n}}),Object.defineProperty(Array.prototype,"delete",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.delete called on null or undefined");if(0===arguments.length)return[];var e=this.length>>>0;if(0===e)return[];for(var t=Array.prototype.concat.apply([],arguments),r=t.length,n=[],a=0;a<e;++a)for(var i=this[a],o=0;o<r;++o){var s=t[o];if(i===s||i!==i&&s!==s){n.push(a);break}}for(var u=[],l=0,c=n.length;l<c;++l)u[l]=this[n[l]];for(var d=Array.prototype.splice,f=n.length-1;f>=0;--f)d.call(this,n[f],1);return u}}),Object.defineProperty(Array.prototype,"deleteAt",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.deleteAt called on null or undefined");if(0===arguments.length)return[];var e=this.length>>>0;if(0===e)return[];for(var t=Array.prototype.splice,r=[].concat(_toConsumableArray(new Set(Array.prototype.concat.apply([],arguments).map(function(t){return t<0?Math.max(0,e+t):t})).values())),n=[].concat(_toConsumableArray(r)).sort(function(e,t){return t-e}),a=[],i=0,o=r.length;i<o;++i)a[i]=this[r[i]];for(var s=0,u=n.length;s<u;++s)t.call(this,n[s],1);return a}}),Object.defineProperty(Array.prototype,"deleteWith",{configurable:!0,writable:!0,value:function(e,t){if(null==this)throw new TypeError("Array.prototype.deleteWith called on null or undefined");if("function"!=typeof e)throw new Error("Array.prototype.deleteWith predicate parameter must be a function");var r=this.length>>>0;if(0===r)return[];for(var n=Array.prototype.splice,a=[],i=[],o=0;o<r;++o)e.call(t,this[o],o,this)&&(i.push(this[o]),a.push(o));for(var s=a.length-1;s>=0;--s)n.call(this,a[s],1);return i}}),Object.defineProperty(Array.prototype,"first",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.first called on null or undefined");if(0!=this.length>>>0)return this[0]}}),Object.defineProperty(Array.prototype,"includesAll",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includesAll called on null or undefined");if(1===arguments.length)return Array.isArray(arguments[0])?Array.prototype.includesAll.apply(this,arguments[0]):Array.prototype.includes.apply(this,arguments);for(var e=0,t=arguments.length;e<t;++e)if(!Array.prototype.some.call(this,function(e){return e===this.val||e!==e&&this.val!==this.val},{val:arguments[e]}))return!1;return!0}}),Object.defineProperty(Array.prototype,"includesAny",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.includesAny called on null or undefined");if(1===arguments.length)return Array.isArray(arguments[0])?Array.prototype.includesAny.apply(this,arguments[0]):Array.prototype.includes.apply(this,arguments);for(var e=0,t=arguments.length;e<t;++e)if(Array.prototype.some.call(this,function(e){return e===this.val||e!==e&&this.val!==this.val},{val:arguments[e]}))return!0;return!1}}),Object.defineProperty(Array.prototype,"last",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.last called on null or undefined");var e=this.length>>>0;if(0!==e)return this[e-1]}}),Object.defineProperty(Array.prototype,"pluck",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.pluck called on null or undefined");var e=this.length>>>0;if(0!==e){var t=0===arguments.length?_random(0,e-1):_randomIndex(e,[].concat(Array.prototype.slice.call(arguments)));return Array.prototype.splice.call(this,t,1)[0]}}}),Object.defineProperty(Array.prototype,"pluckMany",{configurable:!0,writable:!0,value:function(e){if(null==this)throw new TypeError("Array.prototype.pluckMany called on null or undefined");var t=this.length>>>0;if(0===t)return[];var r=Math.trunc(e);if(!Number.isInteger(r))throw new Error("Array.prototype.pluckMany want parameter must be an integer");if(r<1)return[];r>t&&(r=t);var n=Array.prototype.splice,a=[],i=t-1;do{a.push(n.call(this,_random(0,i--),1)[0])}while(a.length<r);return a}}),Object.defineProperty(Array.prototype,"pushUnique",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.pushUnique called on null or undefined");var e=arguments.length;if(0===e)return this.length>>>0;for(var t=Array.prototype.indexOf,r=Array.prototype.push,n=0;n<e;++n){var a=arguments[n];-1===t.call(this,a)&&r.call(this,a)}return this.length>>>0}}),Object.defineProperty(Array.prototype,"random",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.random called on null or undefined");var e=this.length>>>0;if(0!==e){return this[0===arguments.length?_random(0,e-1):_randomIndex(e,[].concat(Array.prototype.slice.call(arguments)))]}}}),Object.defineProperty(Array.prototype,"randomMany",{configurable:!0,writable:!0,value:function(e){if(null==this)throw new TypeError("Array.prototype.randomMany called on null or undefined");var t=this.length>>>0;if(0===t)return[];var r=Math.trunc(e);if(!Number.isInteger(r))throw new Error("Array.prototype.randomMany want parameter must be an integer");if(r<1)return[];r>t&&(r=t);var n=new Map,a=[],i=t-1;do{var o=void 0;do{o=_random(0,i)}while(n.has(o));n.set(o,!0),a.push(this[o])}while(a.length<r);return a}}),Object.defineProperty(Array.prototype,"shuffle",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.shuffle called on null or undefined");var e=this.length>>>0;if(0===e)return this;for(var t=e-1;t>0;--t){var r=Math.floor(_nativeMathRandom()*(t+1));if(t!==r){var n=this[t];this[t]=this[r],this[r]=n}}return this}}),Object.defineProperty(Array.prototype,"unshiftUnique",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.unshiftUnique called on null or undefined");var e=arguments.length;if(0===e)return this.length>>>0;for(var t=Array.prototype.indexOf,r=Array.prototype.unshift,n=0;n<e;++n){var a=arguments[n];-1===t.call(this,a)&&r.call(this,a)}return this.length>>>0}}),Object.defineProperty(Function.prototype,"partial",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Function.prototype.partial called on null or undefined");var e=Array.prototype.slice,t=this,r=e.call(arguments,0);return function(){for(var n=[],a=0,i=0;i<r.length;++i)n.push(r[i]===undefined?arguments[a++]:r[i]);return t.apply(this,n.concat(e.call(arguments,a)))}}}),Object.defineProperty(Math,"clamp",{configurable:!0,writable:!0,value:function(e,t,r){var n=Number(e);return Number.isNaN(n)?NaN:n.clamp(t,r)}}),Object.defineProperty(Math,"easeInOut",{configurable:!0,writable:!0,value:function(e){return 1-(Math.cos(Number(e)*Math.PI)+1)/2}}),Object.defineProperty(Number.prototype,"clamp",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Number.prototype.clamp called on null or undefined");if(2!==arguments.length)throw new Error("Number.prototype.clamp called with an incorrect number of parameters");var e=Number(arguments[0]),t=Number(arguments[1]);if(e>t){var r=[t,e];e=r[0],t=r[1]}return Math.min(Math.max(this,e),t)}}),RegExp.escape||function(){var e=/[\\^$*+?.()|[\]{}]/g,t=new RegExp(e.source);Object.defineProperty(RegExp,"escape",{configurable:!0,writable:!0,value:function(r){var n=String(r);return n&&t.test(n)?n.replace(e,"\\$&"):n}})}(),function(){var e=/{(\d+)(?:,([+-]?\d+))?}/g,t=new RegExp(e.source);Object.defineProperty(String,"format",{configurable:!0,writable:!0,value:function(r){function n(e,t,r){if(!t)return e;var n=Math.abs(t)-e.length;if(n<1)return e;var a=String(r).repeat(n);return t<0?e+a:a+e}if(arguments.length<2)return 0===arguments.length?"":r;var a=2===arguments.length&&Array.isArray(arguments[1])?[].concat(_toConsumableArray(arguments[1])):Array.prototype.slice.call(arguments,1);return 0===a.length?r:t.test(r)?(e.lastIndex=0,r.replace(e,function(e,t,r){var i=a[t];if(null==i)return"";for(;"function"==typeof i;)i=i();switch(void 0===i?"undefined":_typeof(i)){case"string":break;case"object":i=JSON.stringify(i);break;default:i=String(i)}return n(i,r?Number.parseInt(r,10):0," ")})):r}})}(),Object.defineProperty(String.prototype,"contains",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.contains called on null or undefined");return-1!==String.prototype.indexOf.apply(this,arguments)}}),Object.defineProperty(String.prototype,"count",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.count called on null or undefined");var e=String(arguments[0]||"");if(""===e)return 0;for(var t=String.prototype.indexOf,r=e.length,n=Number(arguments[1])||0,a=0;-1!==(n=t.call(this,e,n));)++a,n+=r;return a}}),Object.defineProperty(String.prototype,"first",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.first called on null or undefined");return _getCodePointStartAndEnd(String(this),0).char}}),Object.defineProperty(String.prototype,"last",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.last called on null or undefined");var e=String(this);return _getCodePointStartAndEnd(e,e.length-1).char}}),Object.defineProperty(String.prototype,"splice",{configurable:!0,writable:!0,value:function(e,t,r){if(null==this)throw new TypeError("String.prototype.splice called on null or undefined");var n=this.length>>>0;if(0===n)return"";var a=Number(e);Number.isSafeInteger(a)?a<0&&(a+=n)<0&&(a=0):a=0,a>n&&(a=n);var i=Number(t);(!Number.isSafeInteger(i)||i<0)&&(i=0);var o=this.slice(0,a);return void 0!==r&&(o+=r),a+i<n&&(o+=this.slice(a+i)),o}}),Object.defineProperty(String.prototype,"splitOrEmpty",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.splitOrEmpty called on null or undefined");return""===String(this)?[]:String.prototype.split.apply(this,arguments)}}),Object.defineProperty(String.prototype,"toLocaleUpperFirst",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.toLocaleUpperFirst called on null or undefined");var e=String(this),t=_getCodePointStartAndEnd(e,0),r=t.char,n=t.end;return-1===n?"":r.toLocaleUpperCase()+e.slice(n+1)}}),Object.defineProperty(String.prototype,"toUpperFirst",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.toUpperFirst called on null or undefined");var e=String(this),t=_getCodePointStartAndEnd(e,0),r=t.char,n=t.end;return-1===n?"":r.toUpperCase()+e.slice(n+1)}}),Object.defineProperty(Date.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:date)",this.toISOString()]}}),Object.defineProperty(Function.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:eval)","("+this.toString()+")"]}}),Object.defineProperty(Map.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:map)",[].concat(_toConsumableArray(this))]}}),Object.defineProperty(RegExp.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:eval)",this.toString()]}}),Object.defineProperty(Set.prototype,"toJSON",{configurable:!0,writable:!0,value:function(){return["(revive:set)",[].concat(_toConsumableArray(this))]}}),Object.defineProperty(JSON,"reviveWrapper",{configurable:!0,writable:!0,value:function(e,t){if("string"!=typeof e)throw new TypeError("JSON.reviveWrapper code parameter must be a string");return["(revive:eval)",[e,t]]}}),Object.defineProperty(JSON,"_real_stringify",{value:JSON.stringify}),Object.defineProperty(JSON,"stringify",{configurable:!0,writable:!0,value:function(e,t,r){return JSON._real_stringify(e,function(e,r){var n=r;if("function"==typeof t)try{n=t(e,n)}catch(e){}return void 0===n&&(n=["(revive:eval)","undefined"]),n},r)}}),Object.defineProperty(JSON,"_real_parse",{value:JSON.parse}),Object.defineProperty(JSON,"parse",{configurable:!0,writable:!0,value:function value(text,reviver){return JSON._real_parse(text,function(key,val){var value=val;if(Array.isArray(value)&&2===value.length)switch(value[0]){case"(revive:set)":value=new Set(value[1]);break;case"(revive:map)":value=new Map(value[1]);break;case"(revive:date)":value=new Date(value[1]);break;case"(revive:eval)":try{if(Array.isArray(value[1])){var $ReviveData$=value[1][1];value=eval(value[1][0])}else value=eval(value[1])}catch(e){}}else if("string"==typeof value&&"@@revive@@"===value.slice(0,10))try{value=eval(value.slice(10))}catch(e){}if("function"==typeof reviver)try{value=reviver(key,value)}catch(e){}return value})}}),Object.defineProperty(Array.prototype,"contains",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.contains called on null or undefined");return Array.prototype.includes.apply(this,arguments)}}),Object.defineProperty(Array.prototype,"containsAll",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.containsAll called on null or undefined");return Array.prototype.includesAll.apply(this,arguments)}}),Object.defineProperty(Array.prototype,"containsAny",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.containsAny called on null or undefined");return Array.prototype.includesAny.apply(this,arguments)}}),Object.defineProperty(Array.prototype,"flatten",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("Array.prototype.flatten called on null or undefined");return Array.prototype.flat.call(this,1/0)}}),Object.defineProperty(String.prototype,"readBracketedList",{configurable:!0,writable:!0,value:function(){if(null==this)throw new TypeError("String.prototype.readBracketedList called on null or undefined");for(var e=new RegExp("(?:\\[\\[((?:\\s|\\S)*?)\\]\\])|([^\"'\\s]\\S*)","gm"),t=[],r=void 0;null!==(r=e.exec(this));)r[1]?t.push(r[1]):r[2]&&t.push(r[2]);return t}})}();var Browser=function(){var e=navigator.userAgent.toLowerCase(),t=e.includes("windows phone"),r=Object.freeze({Android:!t&&e.includes("android"),BlackBerry:/blackberry|bb10/.test(e),iOS:!t&&/ip(?:hone|ad|od)/.test(e),Opera:!t&&("object"===_typeof(window.operamini)||e.includes("opera mini")),Windows:t||/iemobile|wpdesktop/.test(e),any:function(){return r.Android||r.BlackBerry||r.iOS||r.Opera||r.Windows}}),n=!r.Windows&&!/khtml|trident|edge/.test(e)&&e.includes("gecko"),a=!e.includes("opera")&&/msie|trident/.test(e),i=a?function(){var t=/(?:msie\s+|rv:)(\d+\.\d)/.exec(e);return t?Number(t[1]):0}():null,o=e.includes("opera")||e.includes(" opr/"),s=o?function(){var t=new RegExp((/khtml|chrome/.test(e)?"opr":"version")+"\\/(\\d+\\.\\d+)"),r=t.exec(e);return r?Number(r[1]):0}():null,u=e.includes("vivaldi");return Object.freeze({userAgent:e,isMobile:r,isGecko:n,isIE:a,ieVersion:i,isOpera:o,operaVersion:s,isVivaldi:u})}(),Has=function(){var e=function(){try{return"function"==typeof document.createElement("audio").canPlayType}catch(e){}return!1}(),t=function(){try{return"Blob"in window&&"File"in window&&"FileList"in window&&"FileReader"in window&&(!Browser.isOpera||Browser.operaVersion>=15)}catch(e){}return!1}(),r=function(){try{return"geolocation"in navigator&&"function"==typeof navigator.geolocation.getCurrentPosition&&"function"==typeof navigator.geolocation.watchPosition}catch(e){}return!1}(),n=function(){try{return"MutationObserver"in window&&"function"==typeof window.MutationObserver}catch(e){}return!1}(),a=function(){try{return"performance"in window&&"function"==typeof window.performance.now}catch(e){}return!1}(),i=function(){try{return"ontouchstart"in window||!!window.DocumentTouch&&document instanceof window.DocumentTouch||!!navigator.maxTouchPoints||!!navigator.msMaxTouchPoints}catch(e){}return!1}(),o=function(){try{for(var e=new Map([["transition","transitionend"],["MSTransition","msTransitionEnd"],["WebkitTransition","webkitTransitionEnd"],["MozTransition","transitionend"]]),t=[].concat(_toConsumableArray(e.keys())),r=document.createElement("div"),n=0;n<t.length;++n)if(r.style[t[n]]!==undefined)return e.get(t[n])}catch(e){}return!1}();return Object.freeze({audio:e,fileAPI:t,geolocation:r,mutationObserver:n,performance:a,touch:i,transitionEndEvent:o})}(),Visibility=function(){function e(){return a}function t(){return a&&document[a.stateProperty]||"visible"}function r(){return Boolean(a)}function n(){return Boolean(a&&document[a.hiddenProperty])}var a=function(){try{return Object.freeze([{hiddenProperty:"hidden",stateProperty:"visibilityState",changeEvent:"visibilitychange"},{hiddenProperty:"webkitHidden",stateProperty:"webkitVisibilityState",changeEvent:"webkitvisibilitychange"},{hiddenProperty:"mozHidden",stateProperty:"mozVisibilityState",changeEvent:"mozvisibilitychange"},{hiddenProperty:"msHidden",stateProperty:"msVisibilityState",changeEvent:"msvisibilitychange"}].find(function(e){return e.hiddenProperty in document}))}catch(e){}return undefined}();return Object.freeze(Object.defineProperties({},{vendor:{get:e},state:{get:t},isEnabled:{value:r},isHidden:{value:n},hiddenProperty:{value:a&&a.hiddenProperty},stateProperty:{value:a&&a.stateProperty},changeEvent:{value:a&&a.changeEvent}}))}(),Fullscreen=function(){function e(e){var t=e||document.documentElement;return t===document.documentElement&&("msRequestFullscreen"===f.requestFn||Browser.isOpera&&Browser.operaVersion<15)&&(t=document.body),t}function t(){return f}function r(){return(f||null)&&document[f.element]}function n(){return Boolean(f&&document[f.isEnabled])}function a(){return Boolean(f&&document[f.element])}function i(t,r){var n=this;if(!f)return Promise.reject(new Error("fullscreen not supported"));var i=e(r);if("function"!=typeof i[f.requestFn])return Promise.reject(new Error("fullscreen not supported"));if(a())return Promise.resolve();if(p())return i[f.requestFn](t);var o=".Fullscreen_requestFullscreen";return new Promise(function(e,r){jQuery(i).off(o).one(""+f.errorEvent+o+" "+f.changeEvent+o,function(t){jQuery(n).off(o),t.type===f.errorEvent?r(new Error("unknown fullscreen request error")):e()}),i[f.requestFn](t)})}function o(){var e=this;if(!f||"function"!=typeof document[f.exitFn])return Promise.reject(new TypeError("fullscreen not supported"));if(!a())return Promise.reject(new TypeError("fullscreen mode not active"));if(p())return document[f.exitFn]();var t=".Fullscreen_exitFullscreen";return new Promise(function(r,n){jQuery(document).off(t).one(""+f.errorEvent+t+" "+f.changeEvent+t,function(a){jQuery(e).off(t),a.type===f.errorEvent?n(new Error("unknown fullscreen exit error")):r()}),document[f.exitFn]()})}function s(e,t){return a()?o():i(e,t)}function u(t,r){if(f){var n=e(r);$(n).on(f.changeEvent,t)}}function l(t,r){if(f){var n=e(r);t?$(n).off(f.changeEvent,t):$(n).off(f.changeEvent)}}function c(t,r){if(f){var n=e(r);$(n).on(f.errorEvent,t)}}function d(t,r){if(f){var n=e(r);t?$(n).off(f.errorEvent,t):$(n).off(f.errorEvent)}}var f=function(){try{return Object.freeze([{isEnabled:"fullscreenEnabled",element:"fullscreenElement",requestFn:"requestFullscreen",exitFn:"exitFullscreen",changeEvent:"fullscreenchange",errorEvent:"fullscreenerror"},{isEnabled:"webkitFullscreenEnabled",element:"webkitFullscreenElement",requestFn:"webkitRequestFullscreen",exitFn:"webkitExitFullscreen",changeEvent:"webkitfullscreenchange",errorEvent:"webkitfullscreenerror"},{isEnabled:"mozFullScreenEnabled",element:"mozFullScreenElement",requestFn:"mozRequestFullScreen",exitFn:"mozCancelFullScreen",changeEvent:"mozfullscreenchange",errorEvent:"mozfullscreenerror"},{isEnabled:"msFullscreenEnabled",element:"msFullscreenElement",requestFn:"msRequestFullscreen",exitFn:"msExitFullscreen",changeEvent:"MSFullscreenChange",errorEvent:"MSFullscreenError"}].find(function(e){return e.isEnabled in document}))}catch(e){}return undefined}(),p=function(){function e(){if(null!==t)return t;if(t=!1,f)try{var e=document.exitFullscreen();e.catch(function(){}),t=e instanceof Promise}catch(e){}return t}var t=null;return e}();return Object.freeze(Object.defineProperties({},{vendor:{get:t},element:{get:r},isEnabled:{value:n},isFullscreen:{value:a},request:{value:i},exit:{value:o},toggle:{value:s},onChange:{value:u},offChange:{value:l},onError:{value:c},offError:{value:d}}))}(),_ref3=function(){function e(e){for(var t=e.cloneNode(!0),r=document.createDocumentFragment(),n=void 0;null!==(n=t.firstChild);){if(n.nodeType===Node.ELEMENT_NODE)switch(n.nodeName.toUpperCase()){case"BR":case"DIV":case"P":r.appendChild(document.createTextNode(" "))}r.appendChild(n)}return r.textContent}function t(e){if("object"!==(void 0===e?"undefined":_typeof(e))||null===e)return e;if(e instanceof String)return String(e);if(e instanceof Number)return Number(e);if(e instanceof Boolean)return Boolean(e)
